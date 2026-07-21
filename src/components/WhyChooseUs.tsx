@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { UserCheck, Sparkles, CheckCircle2, ShieldCheck, Sparkle, BadgePercent } from "lucide-react";
 
@@ -37,6 +38,17 @@ const points = [
 ];
 
 export default function WhyChooseUs() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <section className="py-10 md:py-32 bg-[#0A0A0A] border-b border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
@@ -62,10 +74,10 @@ export default function WhyChooseUs() {
             return (
               <motion.div
                 key={point.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: idx * 0.08 }}
+                transition={{ duration: isMobile ? 0.45 : 0.6, delay: isMobile ? idx * 0.04 : idx * 0.08 }}
                 className="p-3 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#151515] border border-white/5 hover:border-gold/30 transition-all duration-500 hover:shadow-[0_0_20px_rgba(200,168,78,0.05)] flex flex-col justify-between h-full"
               >
                 <div>

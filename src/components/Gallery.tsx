@@ -22,6 +22,16 @@ export default function Gallery({ preview = false }: GalleryProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<"All" | "Exterior" | "Interior" | "Videos">("All");
   const [loadedMedia, setLoadedMedia] = useState<Record<string, boolean>>({});
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Touch coordinates for swipe events
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -260,6 +270,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                       src={img.src}
                                       alt={img.title}
                                       className="w-full h-full object-cover"
+                                      loading="lazy"
                                     />
                                   )}
                                   {/* Premium subtle default black overlay (20% opacity) */}
@@ -364,10 +375,10 @@ export default function Gallery({ preview = false }: GalleryProps) {
                     {displayImages.map((img, displayIdx) => (
                       <motion.div
                         key={img.src}
-                        initial={{ opacity: 0, y: 20 }}
+                        initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        transition={{ duration: 0.6 }}
+                        transition={{ duration: isMobile ? 0.45 : 0.6 }}
                         onClick={() => openLightbox(displayIdx)}
                         className="group relative aspect-square rounded-lg sm:rounded-3xl overflow-hidden cursor-pointer border border-white/10 bg-[#151515] shadow-lg flex flex-col justify-between"
                       >

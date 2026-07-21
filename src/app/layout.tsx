@@ -20,15 +20,22 @@ export const metadata: Metadata = {
   description: siteConfig.metadata.description,
   keywords: [
     "Luxury Bus Rental Delhi",
-    "Luxury Coach Rental New Delhi",
-    "Wedding Bus Rental Delhi NCR",
-    "Corporate Coach Hire Delhi",
+    "Luxury Bus Hire Delhi",
+    "Luxury Coach Rental Delhi",
+    "Premium Bus Rental Delhi",
+    "Corporate Bus Rental Delhi",
+    "Wedding Bus Rental Delhi",
+    "Luxury Coach Delhi NCR",
+    "Group Transportation Delhi",
+    "Staff Transportation Delhi",
     "School Bus Rental Delhi",
-    "Rent Luxury Bus Dwarka",
     "Outstation Bus Rental Delhi",
-    "PK Travels New Delhi"
+    "VIP Coach Rental Delhi",
+    "PK Travels Delhi",
+    "Luxury Coach Hire Delhi"
   ],
   authors: [{ name: siteConfig.businessName }],
+  publisher: siteConfig.businessName,
   alternates: {
     canonical: siteConfig.metadata.url,
   },
@@ -92,8 +99,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Structured JSON-LD Business Schema for SEO
-  const jsonLd = {
+  // Structured JSON-LD LocalBusiness Schema for SEO
+  const localBusinessJsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": siteConfig.businessName,
@@ -128,9 +135,45 @@ export default function RootLayout({
       "opens": "00:00",
       "closes": "23:59"
     },
+    "areaServed": {
+      "@type": "AdministrativeArea",
+      "name": "Delhi NCR"
+    },
     "sameAs": [
       siteConfig.instagramUrl
     ]
+  };
+
+  // Structured JSON-LD Organization Schema for SEO
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": siteConfig.businessName,
+    "url": siteConfig.metadata.url,
+    "logo": `${siteConfig.metadata.url}/assets/logo/logo.PNG`,
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": siteConfig.phones[0].raw,
+      "contactType": "booking support",
+      "areaServed": "IN",
+      "availableLanguage": ["en", "hi"]
+    },
+    "sameAs": [
+      siteConfig.instagramUrl
+    ]
+  };
+
+  // Structured JSON-LD Website Schema for SEO
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": siteConfig.businessName,
+    "url": siteConfig.metadata.url,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${siteConfig.metadata.url}/?s={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
   };
 
   return (
@@ -138,7 +181,15 @@ export default function RootLayout({
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
         />
       </head>
       <body className="antialiased selection:bg-gold selection:text-black">

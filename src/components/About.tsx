@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Shield, Award, Sparkles, Clock } from "lucide-react";
 
@@ -31,6 +32,17 @@ const pillars = [
 ];
 
 export default function About() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <section id="about" className="py-16 md:py-32 bg-[#0A0A0A] border-b border-white/5 relative overflow-hidden">
       {/* Background radial glow */}
@@ -42,20 +54,20 @@ export default function About() {
           {/* Section title */}
           <div className="lg:col-span-5">
             <motion.div
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 0, x: isMobile ? -10 : -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: isMobile ? 0.45 : 0.6 }}
               className="flex items-center gap-3 mb-4"
             >
               <span className="w-12 h-[1px] bg-gold" />
               <span className="text-xs font-bold text-gold tracking-[0.3em] uppercase">Who We Are</span>
             </motion.div>
             <motion.h2
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: 0.1 }}
+              transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.05 : 0.1 }}
               className="font-display font-bold text-2xl sm:text-4xl md:text-5xl text-white tracking-tight leading-tight"
             >
               Travel With Confidence
@@ -65,10 +77,10 @@ export default function About() {
           {/* Description */}
           <div className="lg:col-span-7 mt-2 lg:mt-6">
             <motion.p
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.08 : 0.2 }}
               className="font-sans text-secondary text-sm sm:text-base md:text-lg leading-relaxed md:leading-[1.8] text-left md:text-justify px-1 sm:px-0"
             >
               PK Travels provides premium luxury bus rental services across Delhi NCR. 
@@ -87,10 +99,10 @@ export default function About() {
             return (
               <motion.div
                 key={pillar.title}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: isMobile ? 12 : 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
+                transition={{ duration: isMobile ? 0.45 : 0.6, delay: isMobile ? idx * 0.05 : idx * 0.1 }}
                 className="group relative p-3.5 sm:p-8 rounded-2xl glass-effect glass-effect-hover transition-all duration-500 flex flex-col justify-between h-48 sm:h-72"
               >
                 {/* Background number */}

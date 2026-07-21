@@ -30,9 +30,9 @@ export const siteConfig = {
   
   // Metadata for SEO
   metadata: {
-    title: "PK Travels | Premium Luxury Bus & Coach Rental Delhi NCR",
+    title: "PK Travel Delhi | Premium Luxury Bus Rental in Delhi NCR",
     description: "Experience premium luxury coach bus rentals in Delhi NCR. Book high-end buses for weddings, corporate events, school trips, and outstation tours.",
-    url: "https://www.pktravels.in",
+    url: "https://pktraveldelhi.com",
   },
 };
 export type SiteConfig = typeof siteConfig;

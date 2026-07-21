@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
   Heart,
@@ -51,6 +52,17 @@ const services = [
 ];
 
 export default function Services() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   return (
     <section id="services" className="py-16 md:py-32 bg-[#0C0C0C] border-b border-white/5 relative">
       {/* Subtle top shadow gradient */}
@@ -60,10 +72,10 @@ export default function Services() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: isMobile ? 8 : 15 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: isMobile ? 0.45 : 0.6 }}
             className="flex items-center justify-center gap-3 mb-4"
           >
             <span className="w-6 h-[1px] bg-gold" />
@@ -72,20 +84,20 @@ export default function Services() {
           </motion.div>
           
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.1 }}
+            transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.05 : 0.1 }}
             className="font-display font-bold text-2xl sm:text-4xl md:text-5xl text-white tracking-tight mb-4 sm:mb-6"
           >
             Exquisite Travel Solutions
           </motion.h2>
           
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.08 : 0.2 }}
             className="font-sans text-secondary text-xs sm:text-lg leading-relaxed"
           >
             Delivering bespoke group travel arrangements with luxury, safety, and comfort at the forefront of every destination.
@@ -102,11 +114,11 @@ export default function Services() {
             return (
               <motion.div
                 key={service.title}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: isMobile ? 12 : 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.6, delay: idx * 0.08 }}
-                whileHover={{ y: -6, scale: 1.015 }}
+                transition={{ duration: isMobile ? 0.45 : 0.6, delay: isMobile ? idx * 0.04 : idx * 0.08 }}
+                whileHover={isMobile ? undefined : { y: -6, scale: 1.015 }}
                 className={`group relative p-4 sm:p-8 rounded-2xl sm:rounded-3xl glass-effect glass-effect-hover transition-all duration-500 flex flex-col justify-between min-h-[220px] sm:min-h-[300px] ${
                   isLast ? "col-span-2 lg:col-span-3 lg:max-w-xl lg:mx-auto lg:w-full" : ""
                 }`}

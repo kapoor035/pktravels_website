@@ -1,30 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, CheckCircle, Phone, Calendar } from "lucide-react";
 import { siteConfig } from "@/config/site";
 
 export default function Hero() {
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.15,
+        staggerChildren: isMobile ? 0.08 : 0.15,
         delayChildren: 0.2,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: isMobile ? 12 : 30 },
     visible: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }, // Apple-like easeOutExpon
+      transition: { 
+        duration: isMobile ? 0.45 : 0.8, 
+        ease: [0.16, 1, 0.3, 1] as const 
+      },
     },
   };
 
@@ -101,8 +114,8 @@ export default function Hero() {
             {/* Get a Free Quote */}
             <motion.a
               href="#contact"
-              whileHover={{ scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={isMobile ? undefined : { scale: 1.03, y: -2 }}
+              whileTap={isMobile ? undefined : { scale: 0.98 }}
               className="flex items-center justify-center gap-2 w-full sm:w-auto font-sans font-bold text-sm tracking-wider text-black bg-gold hover:bg-gold-hover px-8 py-3.5 sm:py-4 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(200,168,78,0.25)] hover:shadow-[0_0_30px_rgba(200,168,78,0.4)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
             >
               <Calendar className="w-4 h-4" />
@@ -111,8 +124,8 @@ export default function Hero() {
             {/* Call Now */}
             <motion.a
               href={`tel:${primaryPhone.raw}`}
-              whileHover={{ scale: 1.03, y: -2 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={isMobile ? undefined : { scale: 1.03, y: -2 }}
+              whileTap={isMobile ? undefined : { scale: 0.98 }}
               className="flex items-center justify-center gap-2 w-full sm:w-auto font-sans font-semibold text-sm tracking-wider text-white bg-white/5 hover:bg-white/10 border border-white/10 hover:border-gold/40 px-8 py-3.5 sm:py-4 rounded-full transition-all duration-300 backdrop-blur-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
             >
               <Phone className="w-4 h-4 text-gold" />
@@ -155,8 +168,8 @@ export default function Hero() {
       >
         <span className="text-[10px] text-secondary tracking-[0.3em] uppercase mb-2">Scroll</span>
         <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          animate={isMobile ? { y: 0 } : { y: [0, 8, 0] }}
+          transition={isMobile ? { duration: 0.2 } : { duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         >
           <ChevronDown className="w-6 h-6 text-gold" />
         </motion.div>

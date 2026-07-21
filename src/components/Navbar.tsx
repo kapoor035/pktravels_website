@@ -183,7 +183,7 @@ export default function Navbar() {
                 Call Now
               </a>
               <p className="text-center text-xs text-secondary tracking-widest mt-4">
-                {siteConfig.businessName.toUpperCase()} • DWARKA, NEW DELHI
+                {siteConfig.businessName.toUpperCase()} • DELHI NCR
               </p>
             </motion.div>
           </motion.div>

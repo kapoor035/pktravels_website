@@ -195,7 +195,7 @@ export default function Contact() {
                   <a 
                     href={`https://wa.me/${siteConfig.whatsapp.number}?text=${encodeURIComponent(siteConfig.whatsapp.defaultText)}`} 
                     target="_blank" 
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="font-display text-sm sm:text-lg font-bold text-white hover:text-emerald-400 transition-colors block mt-0.5"
                   >
                     {siteConfig.whatsapp.display}

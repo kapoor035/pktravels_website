@@ -80,14 +80,17 @@ export default function Reviews() {
       return;
     }
 
+    const isMobile = windowWidth < 768;
+    const intervalTime = isMobile ? 11000 : 5000;
+
     autoplayTimer.current = setInterval(() => {
       handleNext();
-    }, 5000);
+    }, intervalTime);
 
     return () => {
       if (autoplayTimer.current) clearInterval(autoplayTimer.current);
     };
-  }, [reviews, isHovered, activeIdx, handleNext]);
+  }, [reviews, isHovered, activeIdx, handleNext, windowWidth]);
 
   // Drag handlers for mobile swipe
   const handleDragEnd = (event: unknown, info: { offset: { x: number } }) => {

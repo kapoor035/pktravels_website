@@ -13,8 +13,25 @@ import BackToTop from "@/components/BackToTop";
 import MobileQuickActions from "@/components/MobileQuickActions";
 
 export default function Home() {
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://pktraveldelhi.com"
+      }
+    ]
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-[#0A0A0A] font-sans antialiased text-white select-none">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <BackToTop />
       <MobileQuickActions />
       {/* Navbar */}
