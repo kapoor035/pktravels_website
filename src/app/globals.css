@@ -3,8 +3,8 @@
 :root {
   --background: #0A0A0A;
   --foreground: #FFFFFF;
-  --accent-gold: #C8A84E;
-  --accent-gold-hover: #E3C46B;
+  --accent-gold: #FF8A00;
+  --accent-gold-hover: #FF9F1A;
   --secondary-text: #BDBDBD;
   --card-bg: #151515;
   --border-color: rgba(255,255,255,0.08);

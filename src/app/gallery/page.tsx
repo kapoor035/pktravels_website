@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
-import Gallery from "@/components/Gallery";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import MobileQuickActions from "@/components/MobileQuickActions";
+
+const Gallery = dynamic(() => import("@/components/Gallery"));
 
 export const metadata: Metadata = {
   title: "Luxury Coach Gallery | PK Travel Delhi",
@@ -49,9 +50,6 @@ export default function GalleryPage() {
       <main className="flex-1 w-full pt-20">
         {/* Full Interactive Masonry Gallery */}
         <Gallery preview={false} />
-
-        {/* Dynamic Contact / Quote booking form */}
-        <Contact />
       </main>
 
       {/* Standard bottom footer links */}

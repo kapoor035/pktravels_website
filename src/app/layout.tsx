@@ -104,7 +104,7 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     "name": siteConfig.businessName,
-    "image": `${siteConfig.metadata.url}/assets/logo/logo.PNG`,
+    "image": `${siteConfig.metadata.url}/assets/logo/logo.png`,
     "@id": `${siteConfig.metadata.url}/#localbusiness`,
     "url": siteConfig.metadata.url,
     "telephone": siteConfig.phones[0].raw,
@@ -150,7 +150,7 @@ export default function RootLayout({
     "@type": "Organization",
     "name": siteConfig.businessName,
     "url": siteConfig.metadata.url,
-    "logo": `${siteConfig.metadata.url}/assets/logo/logo.PNG`,
+    "logo": `${siteConfig.metadata.url}/assets/logo/logo.png`,
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": siteConfig.phones[0].raw,

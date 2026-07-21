@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { Menu, X, Phone } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "@/config/site";
@@ -20,6 +21,18 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const pathname = usePathname();
+
+  const isLinkActive = (href: string) => {
+    if (pathname === "/gallery") {
+      return href === "/gallery";
+    }
+    if (href === "/gallery") {
+      return false;
+    }
+    const sectionId = href.replace("/#", "").replace("#", "");
+    return activeSection === sectionId;
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -74,7 +87,7 @@ export default function Navbar() {
           >
             <div className="relative w-12 h-12 overflow-hidden rounded-full border border-white/10 group-hover:border-gold transition-colors duration-300">
               <Image
-                src="/assets/logo/logo.PNG"
+                src="/assets/logo/logo.png"
                 alt={`${siteConfig.businessName} Logo`}
                 fill
                 className="object-cover scale-110 group-hover:scale-125 transition-transform duration-500"
@@ -93,15 +106,14 @@ export default function Navbar() {
           {/* Desktop Nav Links */}
           <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => {
-              const sectionId = link.href.replace("/#", "").replace("#", "");
-              const isActive = activeSection === sectionId;
+              const isActive = isLinkActive(link.href);
               
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  className={`font-sans text-sm tracking-wide transition-colors duration-300 relative py-2 group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold rounded px-1.5 ${
-                    isActive ? "text-gold font-medium" : "text-secondary hover:text-white"
+                  className={`font-sans text-sm tracking-wide transition-colors duration-300 relative py-2 group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold rounded px-1.5 drop-shadow-[0_1px_4px_rgba(0,0,0,0.6)] ${
+                    isActive ? "text-gold font-semibold" : "text-white/85 hover:text-white font-medium"
                   }`}
                 >
                   {link.name}
@@ -158,7 +170,7 @@ export default function Navbar() {
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`font-display text-2xl font-medium block w-full py-2 hover:text-gold transition-colors ${
-                      activeSection === link.href.replace("/#", "").replace("#", "") ? "text-gold" : "text-white"
+                      isLinkActive(link.href) ? "text-gold" : "text-white"
                     }`}
                   >
                     {link.name}

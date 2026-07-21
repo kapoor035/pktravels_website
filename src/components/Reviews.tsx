@@ -194,23 +194,23 @@ export default function Reviews() {
             ) : (
               /* Case 2: Auto-scrolling horizontal Carousel if > 3 reviews */
               <div className="relative">
-                {/* Arrow buttons */}
-                <div className="absolute -top-14 md:-top-16 right-0 flex gap-2.5 z-20">
-                  <button
-                    onClick={handlePrev}
-                    className="p-3 rounded-full bg-[#151515] border border-white/5 text-white hover:text-gold hover:border-gold/30 hover:shadow-[0_0_15px_rgba(200,168,78,0.15)] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-                    aria-label="Previous Review"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={handleNext}
-                    className="p-3 rounded-full bg-[#151515] border border-white/5 text-white hover:text-gold hover:border-gold/30 hover:shadow-[0_0_15px_rgba(200,168,78,0.15)] transition-all cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
-                    aria-label="Next Review"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
+                {/* Left Arrow Button */}
+                <button
+                  onClick={handlePrev}
+                  className="absolute -left-3 sm:-left-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-[#151515] border border-white/5 text-white hover:text-gold hover:border-gold/30 hover:shadow-[0_0_15px_rgba(200,168,78,0.15)] transition-all cursor-pointer z-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                  aria-label="Previous Review"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+
+                {/* Right Arrow Button */}
+                <button
+                  onClick={handleNext}
+                  className="absolute -right-3 sm:-right-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-[#151515] border border-white/5 text-white hover:text-gold hover:border-gold/30 hover:shadow-[0_0_15px_rgba(200,168,78,0.15)] transition-all cursor-pointer z-20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                  aria-label="Next Review"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
 
                 {/* Slider viewport */}
                 <div className="overflow-hidden w-full cursor-grab active:cursor-grabbing py-4 px-1">
@@ -267,7 +267,7 @@ export default function Reviews() {
                 </div>
 
                 {/* Navigation Dots */}
-                <div className="flex justify-center gap-2 mt-8">
+                <div className="flex justify-center gap-2 mt-3 sm:mt-8">
                   {reviews.map((_, idx) => (
                     <button
                       key={idx}

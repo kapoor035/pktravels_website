@@ -4,11 +4,12 @@ import { useState, useEffect, useCallback } from "react";
 import { Eye, X, ChevronLeft, ChevronRight, Image as ImageIcon, ArrowRight, Play } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 
 interface GalleryItem {
   src: string;
   title: string;
-  category: "Exterior" | "Interior" | "Videos";
+  category: "All" | "45 Seater" | "50 Seater" | "60 Seater" | "65 Seater";
   type: "image" | "video";
 }
 
@@ -20,7 +21,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
   const [validImages, setValidImages] = useState<GalleryItem[]>([]);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"All" | "Exterior" | "Interior" | "Videos">("All");
+  const [activeTab, setActiveTab] = useState<"All" | "45 Seater" | "50 Seater" | "60 Seater" | "65 Seater">("All");
   const [loadedMedia, setLoadedMedia] = useState<Record<string, boolean>>({});
   const [isMobile, setIsMobile] = useState(false);
 
@@ -46,19 +47,25 @@ export default function Gallery({ preview = false }: GalleryProps) {
         if (data.images && data.images.length > 0) {
           const resolved = data.images.map((pathStr: string): GalleryItem => {
             const fileName = pathStr.split("/").pop() || "";
-            const lowerName = fileName.toLowerCase();
             const ext = pathStr.split(".").pop()?.toLowerCase() || "";
             
-            let category: "Exterior" | "Interior" | "Videos" = "Exterior";
+            let category: "All" | "45 Seater" | "50 Seater" | "60 Seater" | "65 Seater" = "All";
             let type: "image" | "video" = "image";
             
             if (["mp4", "mov", "webm"].includes(ext)) {
-              category = "Videos";
               type = "video";
-            } else if (lowerName.includes("interior") || lowerName.includes("int")) {
-              category = "Interior";
-            } else if (lowerName.includes("exterior") || lowerName.includes("ext")) {
-              category = "Exterior";
+            }
+            
+            if (pathStr.includes("/gallery/45-seater/")) {
+              category = "45 Seater";
+            } else if (pathStr.includes("/gallery/50-seater/")) {
+              category = "50 Seater";
+            } else if (pathStr.includes("/gallery/60-seater/")) {
+              category = "60 Seater";
+            } else if (pathStr.includes("/gallery/65-seater/")) {
+              category = "65 Seater";
+            } else {
+              category = "All";
             }
             
             const title = fileName.replace(/\.[^/.]+$/, "").replace(/-/g, " ");
@@ -187,17 +194,16 @@ export default function Gallery({ preview = false }: GalleryProps) {
           </p>
         </div>
 
-        {/* Filter Tabs (Only visible on full Gallery Page, always visible even if empty) */}
         {!preview && !isLoading && (
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {(["All", "Exterior", "Interior", "Videos"] as const).map((tab) => (
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
+            {(["All", "45 Seater", "50 Seater", "60 Seater", "65 Seater"] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => {
                   setActiveTab(tab);
                   setActiveIdx(null);
                 }}
-                className={`font-sans text-xs font-bold tracking-widest uppercase px-6 py-3 rounded-full border transition-all duration-300 ${
+                className={`font-sans text-[10px] sm:text-xs font-bold tracking-widest uppercase px-4 py-2 sm:px-6 sm:py-3 rounded-full border transition-all duration-300 cursor-pointer select-none ${
                   activeTab === tab
                     ? "bg-gold text-black border-gold shadow-[0_0_15px_rgba(200,168,78,0.25)]"
                     : "bg-[#151515] text-secondary border-white/5 hover:text-white hover:border-gold/30"
@@ -225,11 +231,11 @@ export default function Gallery({ preview = false }: GalleryProps) {
         {!isLoading && (
           <>
             {displayImages.length > 0 ? (
-              <div className="flex flex-col items-center gap-12 w-full">
+              <div className="flex flex-col items-center gap-6 sm:gap-12 w-full">
                 {preview ? (
                   <>
                     {/* Mobile Only (under 768px): 1 card autoplay slider */}
-                    <div className="block md:hidden relative w-full aspect-[4/3] max-w-[280px] mx-auto overflow-hidden rounded-2xl border border-white/10 bg-[#151515] shadow-lg cursor-pointer">
+                    <div className="block md:hidden relative w-full aspect-[16/10] max-w-[340px] mx-auto overflow-hidden rounded-2xl border border-white/10 bg-[#151515] shadow-lg cursor-pointer">
                       <motion.div
                         drag="x"
                         dragConstraints={{ left: 0, right: 0 }}
@@ -266,11 +272,12 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                       </div>
                                     </div>
                                   ) : (
-                                    <img
+                                    <Image
                                       src={img.src}
                                       alt={img.title}
-                                      className="w-full h-full object-cover"
-                                      loading="lazy"
+                                      fill
+                                      sizes="(max-width: 768px) 340px, 340px"
+                                      className="object-cover"
                                     />
                                   )}
                                   {/* Premium subtle default black overlay (20% opacity) */}
@@ -320,7 +327,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                           viewport={{ once: true }}
                           transition={{ duration: 0.6 }}
                           onClick={() => openLightbox(displayIdx)}
-                          className="group relative aspect-square rounded-3xl overflow-hidden cursor-pointer border border-white/10 bg-[#151515] shadow-lg flex flex-col justify-between"
+                          className="group relative aspect-[4/3] rounded-3xl overflow-hidden cursor-pointer border border-white/10 bg-[#151515] shadow-lg"
                         >
                           <div className="relative w-full h-full bg-[#151515]">
                             {!loadedMedia[img.src] && (
@@ -340,11 +347,12 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                 </div>
                               </div>
                             ) : (
-                              <img
+                              <Image
                                 src={img.src}
                                 alt={img.title}
-                                className="w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.025]"
-                                loading="lazy"
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
+                                className="object-cover transition-all duration-700 group-hover:scale-[1.025]"
                               />
                             )}
                           </div>
@@ -380,7 +388,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                         viewport={{ once: true }}
                         transition={{ duration: isMobile ? 0.45 : 0.6 }}
                         onClick={() => openLightbox(displayIdx)}
-                        className="group relative aspect-square rounded-lg sm:rounded-3xl overflow-hidden cursor-pointer border border-white/10 bg-[#151515] shadow-lg flex flex-col justify-between"
+                        className="group relative aspect-square md:aspect-[4/3] rounded-lg sm:rounded-3xl overflow-hidden cursor-pointer border border-white/10 bg-[#151515] shadow-lg"
                       >
                         {/* Thumbnail Container */}
                         <div className="relative w-full h-full bg-[#151515]">
@@ -407,13 +415,14 @@ export default function Gallery({ preview = false }: GalleryProps) {
                               </div>
                             </div>
                           ) : (
-                            <img
+                            <Image
                               src={img.src}
                               alt={img.title}
-                              className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-[1.025] ${
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                              className={`object-cover transition-all duration-700 group-hover:scale-[1.025] ${
                                 loadedMedia[img.src] ? "opacity-100 scale-100" : "opacity-0 scale-95"
                               }`}
-                              loading="lazy"
                               onLoad={() => setLoadedMedia((prev) => ({ ...prev, [img.src]: true }))}
                             />
                           )}
@@ -446,11 +455,11 @@ export default function Gallery({ preview = false }: GalleryProps) {
                     initial={{ opacity: 0, y: 10 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="mt-6"
+                    className="mt-2 sm:mt-6"
                   >
                     <Link
                       href="/gallery"
-                      className="flex items-center gap-2 font-sans font-bold text-sm tracking-wider text-black bg-gold hover:bg-gold-hover px-8 py-4 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(200,168,78,0.15)]"
+                      className="flex items-center gap-2 font-sans font-bold text-xs sm:text-sm tracking-wider text-black bg-gold hover:bg-gold-hover px-6 py-3 sm:px-8 sm:py-4 rounded-full transition-all duration-300 shadow-[0_0_20px_rgba(200,168,78,0.15)] cursor-pointer select-none"
                     >
                       <span>View Complete Gallery</span>
                       <ArrowRight className="w-4 h-4" />
@@ -459,43 +468,35 @@ export default function Gallery({ preview = false }: GalleryProps) {
                 )}
               </div>
             ) : (
-              /* Premium Minimalist Empty State (strictly coach-centric) */
-              <div className="flex flex-col items-center gap-8">
+              /* Premium Minimalist Empty State (capacity-centric) */
+              <div className="flex flex-col items-center gap-8 w-full max-w-xl mx-auto">
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="max-w-xl mx-auto rounded-3xl border border-gold/20 p-12 text-center bg-[#151515]/50 backdrop-blur-md relative overflow-hidden w-full"
+                  className="rounded-3xl border border-gold/20 p-8 sm:p-12 text-center bg-[#151515]/50 backdrop-blur-md relative overflow-hidden w-full"
                 >
-                  <div className="absolute inset-0 bg-[radial-gradient(#C8A84E_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.03] pointer-events-none" />
-                  <ImageIcon className="w-12 h-12 text-gold/30 mx-auto mb-6" />
-                  <h3 className="font-display text-lg font-bold text-white mb-2">
-                    Luxury Coach Gallery Coming Soon
+                  <div className="absolute inset-0 bg-[radial-gradient(#FF8A00_1px,transparent_1px)] [background-size:20px_20px] opacity-[0.03] pointer-events-none" />
+                  <ImageIcon className="w-10 h-10 sm:w-12 sm:h-12 text-gold/30 mx-auto mb-4 sm:mb-6" />
+                  <h3 className="font-display text-base sm:text-lg font-bold text-white mb-2">
+                    Fleet Images Coming Soon
                   </h3>
-                  <p className="font-sans text-sm text-secondary leading-relaxed mb-6">
-                    Upload real interior photographs, exterior photographs and luxury coach videos into the gallery folder and they will automatically appear here.
+                  <p className="font-sans text-xs sm:text-sm text-secondary leading-relaxed mb-6">
+                    Fleet images will be added soon.
                   </p>
                   
                   {!preview ? (
-                    <div className="bg-black/50 border border-white/5 py-3 px-4 rounded-xl font-mono text-[11px] sm:text-xs text-gold/90 text-left select-all">
-                      📁 public/assets/gallery/<br />
-                      &nbsp;&nbsp;├── exterior-01.jpg (for Exterior category)<br />
-                      &nbsp;&nbsp;├── interior-02.jpg (for Interior category)<br />
-                      &nbsp;&nbsp;└── video-03.mp4 (for Videos category)
+                    <div className="bg-black/50 border border-white/5 py-4 px-5 rounded-xl font-mono text-[10px] sm:text-xs text-gold/90 text-left select-all">
+                      📁 public/gallery/<br />
+                      &nbsp;&nbsp;├── all/ (for the All category)<br />
+                      &nbsp;&nbsp;├── 45-seater/ (for 45 Seater)<br />
+                      &nbsp;&nbsp;├── 50-seater/ (for 50 Seater)<br />
+                      &nbsp;&nbsp;├── 60-seater/ (for 60 Seater)<br />
+                      &nbsp;&nbsp;└── 65-seater/ (for 65 Seater)
                     </div>
                   ) : (
-                    <p className="text-xs text-gold">Ready for real vehicle visuals</p>
+                    <p className="text-xs text-gold font-medium">Ready for fleet capacity visuals</p>
                   )}
                 </motion.div>
-
-                {preview && (
-                  <Link
-                    href="/gallery"
-                    className="flex items-center gap-2 font-sans font-bold text-sm tracking-wider text-white border border-white/10 hover:border-gold px-8 py-3.5 rounded-full transition-all duration-300 bg-white/5"
-                  >
-                    <span>View Setup Guide & Gallery Route</span>
-                    <ArrowRight className="w-4 h-4 text-gold" />
-                  </Link>
-                )}
               </div>
             )}
           </>
@@ -550,15 +551,19 @@ export default function Gallery({ preview = false }: GalleryProps) {
                 <video
                   src={displayImages[activeIdx].src}
                   controls
+                  controlsList="nodownload"
+                  onContextMenu={(e) => e.preventDefault()}
                   playsInline
                   className="max-w-full max-h-[70vh] rounded-2xl border border-white/10 shadow-2xl"
                 />
               ) : (
-                <img
+                <Image
                   src={displayImages[activeIdx].src}
                   alt={displayImages[activeIdx].title}
-                  className="max-w-full max-h-[70vh] object-contain rounded-2xl border border-white/10 shadow-2xl"
-                  loading="lazy"
+                  width={1200}
+                  height={800}
+                  className="max-w-full max-h-[70vh] w-auto h-auto object-contain rounded-2xl border border-white/10 shadow-2xl"
+                  priority
                 />
               )}
               

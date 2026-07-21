@@ -18,6 +18,21 @@ export default function Hero() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+
+  useEffect(() => {
+    const handleLoad = () => {
+      setShouldLoadVideo(true);
+    };
+
+    if (document.readyState === "complete") {
+      setTimeout(() => setShouldLoadVideo(true), 0);
+    } else {
+      window.addEventListener("load", handleLoad);
+      return () => window.removeEventListener("load", handleLoad);
+    }
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -46,19 +61,21 @@ export default function Hero() {
   return (
     <section id="home" className="relative w-full h-[100dvh] sm:h-screen overflow-hidden flex items-center justify-center bg-[#0A0A0A]">
       {/* Background Drone Video with smooth loaded fade-in */}
-      <motion.video
-        autoPlay
-        muted
-        loop
-        playsInline
-        onLoadedData={() => setVideoLoaded(true)}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: videoLoaded ? 1 : 0 }}
-        transition={{ duration: 1 }}
-        className="absolute top-0 left-0 w-full h-full object-cover z-0 no-controls"
-      >
-        <source src="/assets/hero/drone.mp4" type="video/mp4" />
-      </motion.video>
+      {shouldLoadVideo && (
+        <motion.video
+          autoPlay
+          muted
+          loop
+          playsInline
+          onLoadedData={() => setVideoLoaded(true)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: videoLoaded ? 1 : 0 }}
+          transition={{ duration: 1 }}
+          className="absolute top-0 left-0 w-full h-full object-cover z-0 no-controls"
+        >
+          <source src="/assets/hero/drone.mp4" type="video/mp4" />
+        </motion.video>
+      )}
 
       {/* Loader visual behind video to prevent layouts popping */}
       <AnimatePresence>
@@ -101,7 +118,7 @@ export default function Hero() {
           {/* Subheading */}
           <motion.p
             variants={itemVariants}
-            className="font-sans text-secondary max-w-2xl text-xs sm:text-lg md:text-xl leading-relaxed mb-6 sm:mb-10 text-pretty px-2 sm:px-0"
+            className="font-sans text-white/90 max-w-2xl text-xs sm:text-lg md:text-xl leading-relaxed mb-6 sm:mb-10 text-pretty px-2 sm:px-0 drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] font-medium"
           >
             Premium luxury coaches for weddings, corporate travel, school trips and outstation journeys. Professional drivers. Comfortable seating. Reliable service. Available across Delhi NCR.
           </motion.p>

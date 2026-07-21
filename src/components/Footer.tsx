@@ -25,12 +25,31 @@ const Instagram = (props: React.SVGProps<SVGSVGElement>) => (
   </svg>
 );
 
+const Linkedin = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <rect width="4" height="12" x="2" y="9" />
+    <circle cx="4" cy="4" r="2" />
+  </svg>
+);
+
 export default function Footer() {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const primaryPhone = siteConfig.phones[0];
+
 
   return (
     <footer className="bg-[#050505] border-t border-white/5 py-6 md:py-16 text-secondary relative overflow-hidden">
@@ -48,7 +67,7 @@ export default function Footer() {
             >
               <div className="relative w-10 h-10 overflow-hidden rounded-full border border-white/10 group-hover:border-gold transition-colors duration-300">
                 <Image
-                  src="/assets/logo/logo.PNG"
+                  src="/assets/logo/logo.png"
                   alt={`${siteConfig.businessName} Logo`}
                   fill
                   className="object-cover scale-110"
@@ -92,6 +111,17 @@ export default function Footer() {
               >
                 <MessageSquare className="w-4 h-4" />
               </motion.a>
+              <motion.a
+                href="https://www.linkedin.com/company/pk-travels-delhi/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.1, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-10 h-10 rounded-full border border-white/10 hover:border-gold/40 flex items-center justify-center bg-white/5 text-white hover:text-gold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold"
+                aria-label="Follow PK Travels on LinkedIn"
+              >
+                <Linkedin className="w-4 h-4" />
+              </motion.a>
             </div>
           </div>
 
@@ -124,7 +154,15 @@ export default function Footer() {
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-gold shrink-0" />
-                <a href={`tel:${primaryPhone.raw}`} className="hover:text-gold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold px-1 rounded">{primaryPhone.display}</a>
+                <div className="flex flex-wrap gap-1.5 items-center">
+                  <a href={`tel:${siteConfig.phones[0].raw}`} className="hover:text-gold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold px-1 rounded">
+                    {siteConfig.phones[0].display}
+                  </a>
+                  <span className="text-secondary/50">,</span>
+                  <a href={`tel:${siteConfig.phones[1].raw}`} className="hover:text-gold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold px-1 rounded">
+                    {siteConfig.phones[1].display}
+                  </a>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-gold shrink-0" />
@@ -134,6 +172,12 @@ export default function Footer() {
                 <Instagram className="w-4 h-4 text-gold shrink-0" />
                 <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Follow PK Travels on Instagram" className="hover:text-gold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold px-1 rounded">
                   Instagram Profile
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <Linkedin className="w-4 h-4 text-gold shrink-0" />
+                <a href="https://www.linkedin.com/company/pk-travels-delhi/" target="_blank" rel="noopener noreferrer" aria-label="Follow PK Travels on LinkedIn" className="hover:text-gold transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold px-1 rounded">
+                  LinkedIn Profile
                 </a>
               </div>
             </div>

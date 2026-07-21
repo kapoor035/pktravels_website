@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Phone, MessageSquare, MapPin, Mail, Send, Check, Loader2, AlertCircle } from "lucide-react";
+import { Phone, MessageSquare, MapPin, Mail, Send, Check, Loader2, AlertCircle, Calendar, ChevronLeft, ChevronRight, X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteConfig } from "@/config/site";
 
@@ -37,6 +37,22 @@ export default function Contact() {
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
   const [activeMobileTab, setActiveMobileTab] = useState<"connect" | "quote">("connect");
+  const [showCalendar, setShowCalendar] = useState(false);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
+
+  const formatDateFriendly = (dateStr: string) => {
+    if (!dateStr) return "";
+    const parts = dateStr.split("-");
+    if (parts.length !== 3) return dateStr;
+    const [yyyy, mm, dd] = parts;
+    const date = new Date(Number(yyyy), Number(mm) - 1, Number(dd));
+    if (isNaN(date.getTime())) return dateStr;
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric"
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -251,16 +267,13 @@ export default function Contact() {
                 <div>
                   <p className="font-sans text-[10px] sm:text-xs text-white/55 uppercase tracking-widest">Office Address</p>
                   <p className="font-sans text-sm text-secondary group-hover/addr:text-gold mt-0.5 leading-relaxed transition-colors">
-                    {siteConfig.address.line1},<br />
-                    {siteConfig.address.line2},<br />
-                    {siteConfig.address.line3}
+                    {siteConfig.address.full}
                   </p>
                 </div>
               </a>
             </div>
 
-            {/* Premium Dark Google Map Embed - Hidden on Mobile */}
-            <div className="relative w-full h-[260px] rounded-3xl overflow-hidden border border-white/5 shadow-lg group hidden sm:block">
+            <div className="relative w-full h-[260px] rounded-3xl overflow-hidden border border-white/5 hover:border-gold/30 transition-all duration-500 shadow-lg group hidden sm:block">
               <iframe
                 src={siteConfig.googleMapsUrl}
                 width="100%"
@@ -348,37 +361,53 @@ export default function Contact() {
                         {/* Date input */}
                         <div className="flex flex-col gap-1.5 sm:gap-2">
                           <label htmlFor="date" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Journey Date</label>
-                          <input
-                            type="date"
-                            id="date"
-                            name="date"
-                            required
-                            disabled={status === "loading"}
-                            value={formData.date}
-                            onChange={handleInputChange}
-                            className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-white outline-none transition-all disabled:opacity-50"
-                          />
+                          <div className="relative">
+                            <input
+                              type="text"
+                              id="date"
+                              name="date"
+                              readOnly
+                              required
+                              onClick={() => {
+                                if (status !== "loading") {
+                                  setShowCalendar(true);
+                                }
+                              }}
+                              disabled={status === "loading"}
+                              value={formatDateFriendly(formData.date)}
+                              placeholder="Select Date"
+                              className="w-full bg-black/40 border border-white/10 focus:border-gold rounded-xl pl-3 pr-10 py-2 sm:pl-4 sm:pr-10 sm:py-3 text-xs sm:text-sm text-white cursor-pointer outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed select-none"
+                            />
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gold pointer-events-none">
+                              <Calendar className="w-4 h-4" />
+                            </div>
+                          </div>
                         </div>
                       </div>
 
                       {/* Service Select */}
                       <div className="flex flex-col gap-1.5 sm:gap-2">
                         <label htmlFor="service" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Service Type</label>
-                        <select
-                          id="service"
-                          name="service"
-                          disabled={status === "loading"}
-                          value={formData.service}
-                          onChange={handleInputChange}
-                          className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3 py-2.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white outline-none transition-all disabled:opacity-50"
-                        >
-                          <option value="Weddings" className="bg-[#151515]">Wedding Transportation</option>
-                          <option value="Corporate" className="bg-[#151515]">Corporate Travel</option>
-                          <option value="Schools" className="bg-[#151515]">School & College Trip</option>
-                          <option value="Outstation" className="bg-[#151515]">Outstation Tours</option>
-                          <option value="Airport" className="bg-[#151515]">Airport Transfer</option>
-                          <option value="Others" className="bg-[#151515]">Family / Other Functions</option>
-                        </select>
+                        <div className="relative">
+                          <select
+                            id="service"
+                            name="service"
+                            disabled={status === "loading"}
+                            value={formData.service}
+                            onChange={handleInputChange}
+                            className="w-full bg-black/40 border border-white/10 focus:border-gold rounded-xl pl-3 pr-10 py-2.5 sm:pl-4 sm:pr-10 sm:py-3 text-xs sm:text-sm text-white outline-none appearance-none transition-all disabled:opacity-50 cursor-pointer select-none"
+                          >
+                            <option value="Weddings" className="bg-[#151515]">Wedding Transportation</option>
+                            <option value="Corporate" className="bg-[#151515]">Corporate Travel</option>
+                            <option value="Schools" className="bg-[#151515]">School & College Trip</option>
+                            <option value="Outstation" className="bg-[#151515]">Outstation Tours</option>
+                            <option value="Airport" className="bg-[#151515]">Airport Transfer</option>
+                            <option value="Others" className="bg-[#151515]">Family / Other Functions</option>
+                          </select>
+                          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gold pointer-events-none">
+                            <ChevronDown className="w-4 h-4" />
+                          </div>
+                        </div>
                       </div>
 
                       {/* Message input */}
@@ -456,6 +485,175 @@ export default function Contact() {
           </div>
         </div>
       </div>
+
+      {/* Premium Theme Calendar Modal */}
+      <AnimatePresence>
+        {showCalendar && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setShowCalendar(false)}
+              className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+            />
+            
+            {/* Calendar Modal Card */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="relative w-full max-w-[340px] bg-[#151515] border border-gold/30 rounded-3xl p-5 shadow-[0_15px_50px_rgba(0,0,0,0.8)] z-10 flex flex-col gap-4 select-none"
+            >
+              {/* Header Close button */}
+              <button 
+                type="button"
+                onClick={() => setShowCalendar(false)}
+                className="absolute top-4 right-4 text-white/40 hover:text-gold transition-colors p-1"
+                aria-label="Close Calendar"
+              >
+                <X className="w-4 h-4" />
+              </button>
+
+              {/* Month/Year selector row */}
+              <div className="flex items-center justify-between mt-2 px-1">
+                <h4 className="font-display font-bold text-lg text-white tracking-wide">
+                  {currentMonth.toLocaleDateString("en-US", { month: "long", year: "numeric" })}
+                </h4>
+                <div className="flex gap-1">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const prevMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1);
+                      // Don't go to past months before current month
+                      const today = new Date();
+                      if (prevMonth.getFullYear() > today.getFullYear() || 
+                         (prevMonth.getFullYear() === today.getFullYear() && prevMonth.getMonth() >= today.getMonth())) {
+                        setCurrentMonth(prevMonth);
+                      }
+                    }}
+                    className="p-1.5 rounded-lg border border-white/5 bg-black/20 text-white/60 hover:text-gold hover:border-gold/20 transition-colors cursor-pointer"
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const nextMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1);
+                      setCurrentMonth(nextMonth);
+                    }}
+                    className="p-1.5 rounded-lg border border-white/5 bg-black/20 text-white/60 hover:text-gold hover:border-gold/20 transition-colors cursor-pointer"
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Weekdays row */}
+              <div className="grid grid-cols-7 text-center text-[10px] font-bold text-gold/60 uppercase tracking-widest py-1 border-b border-white/5">
+                {["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"].map((day) => (
+                  <div key={day} className="py-1">{day}</div>
+                ))}
+              </div>
+
+              {/* Days grid */}
+              <div className="grid grid-cols-7 gap-1 text-center text-xs">
+                {(() => {
+                  const year = currentMonth.getFullYear();
+                  const month = currentMonth.getMonth();
+                  const firstDayIndex = new Date(year, month, 1).getDay();
+                  const totalDays = new Date(year, month + 1, 0).getDate();
+                  const prevMonthTotalDays = new Date(year, month, 0).getDate();
+                  
+                  const cells = [];
+                  
+                  // 1. Previous month padded days
+                  for (let i = firstDayIndex - 1; i >= 0; i--) {
+                    const dayVal = prevMonthTotalDays - i;
+                    const dateObj = new Date(year, month - 1, dayVal);
+                    cells.push({
+                      day: dayVal,
+                      isCurrentMonth: false,
+                      date: dateObj,
+                      disabled: true // Pad days are disabled
+                    });
+                  }
+                  
+                  // 2. Current month days
+                  const today = new Date();
+                  today.setHours(0,0,0,0);
+                  for (let i = 1; i <= totalDays; i++) {
+                    const dateObj = new Date(year, month, i);
+                    const isPast = dateObj < today;
+                    cells.push({
+                      day: i,
+                      isCurrentMonth: true,
+                      date: dateObj,
+                      disabled: isPast
+                    });
+                  }
+                  
+                  // 3. Next month padded days
+                  const remaining = 42 - cells.length;
+                  for (let i = 1; i <= remaining; i++) {
+                    const dateObj = new Date(year, month + 1, i);
+                    cells.push({
+                      day: i,
+                      isCurrentMonth: false,
+                      date: dateObj,
+                      disabled: true // Next month padded days are also disabled in this picker
+                    });
+                  }
+                  
+                  // Render cells
+                  return cells.map((cell, idx) => {
+                    const isSelected = formData.date === (() => {
+                      const yyyy = cell.date.getFullYear();
+                      const mm = String(cell.date.getMonth() + 1).padStart(2, '0');
+                      const dd = String(cell.date.getDate()).padStart(2, '0');
+                      return `${yyyy}-${mm}-${dd}`;
+                    })();
+                    
+                    const isToday = cell.date.toDateString() === new Date().toDateString();
+                    
+                    return (
+                      <button
+                        key={idx}
+                        type="button"
+                        disabled={cell.disabled}
+                        onClick={() => {
+                          const yyyy = cell.date.getFullYear();
+                          const mm = String(cell.date.getMonth() + 1).padStart(2, '0');
+                          const dd = String(cell.date.getDate()).padStart(2, '0');
+                          setFormData((prev) => ({ ...prev, date: `${yyyy}-${mm}-${dd}` }));
+                          setShowCalendar(false);
+                        }}
+                        className={`
+                          h-8 w-8 mx-auto flex items-center justify-center rounded-full text-xs transition-all outline-none focus-visible:ring-1 focus-visible:ring-gold cursor-pointer
+                          ${cell.disabled 
+                            ? "opacity-15 cursor-not-allowed text-white/50" 
+                            : !cell.isCurrentMonth 
+                              ? "text-white/30 hover:bg-white/5" 
+                              : isSelected
+                                ? "bg-gold text-black font-bold shadow-lg shadow-gold/25"
+                                : isToday
+                                  ? "border border-gold/50 text-gold font-semibold"
+                                  : "text-white/80 hover:bg-white/10"
+                          }
+                        `}
+                      >
+                        {cell.day}
+                      </button>
+                    );
+                  });
+                })()}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }

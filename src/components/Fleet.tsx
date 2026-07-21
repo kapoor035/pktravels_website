@@ -5,7 +5,7 @@ import { Check, Star } from "lucide-react";
 import { motion } from "framer-motion";
 
 const features = [
-  "VIP Reclining Leather Seats",
+  "Push Back VIP Seats",
   "Ambient Gold LED Lighting System",
   "Advanced Climate Control & AC",
   "Spacious Under-Bus Luggage Hold",
@@ -98,7 +98,7 @@ export default function Fleet() {
                 preload="metadata"
                 className="w-full h-full object-cover scale-100 group-hover:scale-[1.02] transition-transform duration-700 no-controls"
               >
-                <source src="/assets/gallery/video-01.mp4" type="video/mp4" />
+                <source src="/gallery/all/video-01.mp4" type="video/mp4" />
               </video>
               
               {/* Subtle Black Overlay (25–30% opacity) */}

@@ -23,6 +23,8 @@ export default function InfluencerFloatingCard() {
     }
   };
 
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       // Fade out the floating card when scrolled down past 80% of the viewport height
@@ -41,9 +43,16 @@ export default function InfluencerFloatingCard() {
 
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("keydown", handleKeyDown);
+
+    // Delay loading the 48MB influencer preview video by 1.5s to speed up main page interactivity
+    const timer = setTimeout(() => {
+      setShouldLoadVideo(true);
+    }, 1500);
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("keydown", handleKeyDown);
+      clearTimeout(timer);
     };
   }, [isModalOpen]);
 
@@ -62,15 +71,17 @@ export default function InfluencerFloatingCard() {
           >
             <div className="relative w-32 h-44 sm:w-48 sm:h-64 rounded-2xl overflow-hidden glass-effect border border-gold/30 hover:border-gold transition-colors duration-500 shadow-2xl">
               {/* Loop Preview Video */}
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700 no-controls"
-              >
-                <source src="/assets/videos/influencer.mp4" type="video/mp4" />
-              </video>
+              {shouldLoadVideo && (
+                <video
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700 no-controls"
+                >
+                  <source src="/assets/videos/influencer.mp4" type="video/mp4" />
+                </video>
+              )}
 
               {/* Dark Overlay */}
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-300" />
@@ -114,6 +125,8 @@ export default function InfluencerFloatingCard() {
                 ref={modalVideoRef}
                 autoPlay
                 controls
+                controlsList="nodownload"
+                onContextMenu={(e) => e.preventDefault()}
                 muted={isMuted}
                 playsInline
                 className="w-full h-full object-contain"

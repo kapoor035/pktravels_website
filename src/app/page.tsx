@@ -1,16 +1,18 @@
+import dynamic from "next/dynamic";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import InfluencerFloatingCard from "@/components/InfluencerFloatingCard";
 import About from "@/components/About";
 import Services from "@/components/Services";
 import Fleet from "@/components/Fleet";
-import Gallery from "@/components/Gallery";
 import WhyChooseUs from "@/components/WhyChooseUs";
-import Reviews from "@/components/Reviews";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import BackToTop from "@/components/BackToTop";
 import MobileQuickActions from "@/components/MobileQuickActions";
+
+const InfluencerFloatingCard = dynamic(() => import("@/components/InfluencerFloatingCard"));
+const Gallery = dynamic(() => import("@/components/Gallery"));
+const Reviews = dynamic(() => import("@/components/Reviews"));
+const Contact = dynamic(() => import("@/components/Contact"));
 
 export default function Home() {
   const breadcrumbJsonLd = {
