@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${siteConfig.metadata.url}/assets/logo/logo.PNG`,
+        url: `${siteConfig.metadata.url}/assets/logo/logo.png`,
         width: 800,
         height: 800,
         alt: `${siteConfig.businessName} Logo`,
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.metadata.title,
     description: siteConfig.metadata.description,
-    images: [`${siteConfig.metadata.url}/assets/logo/logo.PNG`],
+    images: [`${siteConfig.metadata.url}/assets/logo/logo.png`],
   },
   robots: {
     index: true,

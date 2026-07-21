@@ -1,14 +1,16 @@
 "use client";
-
-import { useState, useEffect } from "react";
+ 
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, CheckCircle, Phone, Calendar } from "lucide-react";
 import { siteConfig } from "@/config/site";
-
+ 
 export default function Hero() {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-
+  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+ 
   useEffect(() => {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -17,22 +19,20 @@ export default function Hero() {
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
-
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-
+ 
   useEffect(() => {
-    const handleLoad = () => {
-      setShouldLoadVideo(true);
-    };
-
-    if (document.readyState === "complete") {
-      setTimeout(() => setShouldLoadVideo(true), 0);
-    } else {
-      window.addEventListener("load", handleLoad);
-      return () => window.removeEventListener("load", handleLoad);
-    }
+    setShouldLoadVideo(true);
   }, []);
-
+ 
+  useEffect(() => {
+    if (shouldLoadVideo && videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch((err) => {
+        console.log("Hero video autoplay failed:", err);
+      });
+    }
+  }, [shouldLoadVideo]);
+ 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -43,7 +43,7 @@ export default function Hero() {
       },
     },
   };
-
+ 
   const itemVariants = {
     hidden: { opacity: 0, y: isMobile ? 12 : 30 },
     visible: {
@@ -55,18 +55,20 @@ export default function Hero() {
       },
     },
   };
-
+ 
   const primaryPhone = siteConfig.phones[0];
-
+ 
   return (
     <section id="home" className="relative w-full h-[100dvh] sm:h-screen overflow-hidden flex items-center justify-center bg-[#0A0A0A]">
       {/* Background Drone Video with smooth loaded fade-in */}
       {shouldLoadVideo && (
         <motion.video
+          ref={videoRef}
           autoPlay
           muted
           loop
           playsInline
+          preload="metadata"
           onLoadedData={() => setVideoLoaded(true)}
           initial={{ opacity: 0 }}
           animate={{ opacity: videoLoaded ? 1 : 0 }}

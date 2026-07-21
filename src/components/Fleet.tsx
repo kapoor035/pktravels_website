@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Check, Star } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -37,6 +37,7 @@ const BusIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 export default function Fleet() {
   const [isMobile, setIsMobile] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -45,6 +46,15 @@ export default function Fleet() {
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = true;
+      videoRef.current.play().catch((err) => {
+        console.log("Fleet video autoplay failed:", err);
+      });
+    }
   }, []);
 
   return (
@@ -91,6 +101,7 @@ export default function Fleet() {
 
               {/* Featured Drone Video */}
               <video
+                ref={videoRef}
                 autoPlay
                 muted
                 loop

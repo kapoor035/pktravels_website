@@ -9,22 +9,36 @@ export default function InfluencerFloatingCard() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
-
+  const previewVideoRef = useRef<HTMLVideoElement>(null);
+ 
   const openModal = () => {
     setIsModalOpen(true);
     // Enable audio when opening the full modal
     setIsMuted(false);
   };
-
+ 
   const closeModal = () => {
     setIsModalOpen(false);
     if (modalVideoRef.current) {
       modalVideoRef.current.pause();
     }
   };
-
+ 
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
-
+ 
+  useEffect(() => {
+    setShouldLoadVideo(true);
+  }, []);
+ 
+  useEffect(() => {
+    if (shouldLoadVideo && previewVideoRef.current) {
+      previewVideoRef.current.muted = true;
+      previewVideoRef.current.play().catch((err) => {
+        console.log("Influencer preview video autoplay failed:", err);
+      });
+    }
+  }, [shouldLoadVideo]);
+ 
   useEffect(() => {
     const handleScroll = () => {
       // Fade out the floating card when scrolled down past 80% of the viewport height
@@ -40,22 +54,16 @@ export default function InfluencerFloatingCard() {
         closeModal();
       }
     };
-
+ 
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("keydown", handleKeyDown);
-
-    // Delay loading the 48MB influencer preview video by 1.5s to speed up main page interactivity
-    const timer = setTimeout(() => {
-      setShouldLoadVideo(true);
-    }, 1500);
-
+ 
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("keydown", handleKeyDown);
-      clearTimeout(timer);
     };
   }, [isModalOpen]);
-
+ 
   return (
     <>
       {/* Floating Card */}
@@ -73,10 +81,12 @@ export default function InfluencerFloatingCard() {
               {/* Loop Preview Video */}
               {shouldLoadVideo && (
                 <video
+                  ref={previewVideoRef}
                   autoPlay
                   muted
                   loop
                   playsInline
+                  preload="metadata"
                   className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700 no-controls"
                 >
                   <source src="/assets/videos/influencer.mp4" type="video/mp4" />

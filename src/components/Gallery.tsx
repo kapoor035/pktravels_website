@@ -266,6 +266,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                         muted
                                         loop
                                         playsInline
+                                        preload="metadata"
                                       />
                                       <div className="absolute w-8 h-8 rounded-full bg-gold/90 text-black flex items-center justify-center shadow-lg z-20">
                                         <Play className="w-4 h-4 fill-current ml-0.5" />
