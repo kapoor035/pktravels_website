@@ -266,6 +266,9 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                         muted
                                         loop
                                         playsInline
+                                        controls={false}
+                                        disablePictureInPicture={true}
+                                        controlsList="nodownload nofullscreen noremoteplayback"
                                         preload="metadata"
                                       />
                                       <div className="absolute w-8 h-8 rounded-full bg-gold/90 text-black flex items-center justify-center shadow-lg z-20">
@@ -283,16 +286,6 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                   )}
                                   {/* Premium subtle default black overlay (20% opacity) */}
                                   <div className="absolute inset-0 bg-black/20 pointer-events-none z-10" />
-                                </div>
-
-                                {/* Label Overlay */}
-                                <div className="absolute bottom-0 left-0 right-0 p-3.5 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-15">
-                                  <span className="text-[8px] text-gold tracking-widest font-bold uppercase mb-0.5 block">
-                                    {img.category}
-                                  </span>
-                                  <h3 className="font-display text-xs font-bold text-white tracking-wide">
-                                    {img.title}
-                                  </h3>
                                 </div>
                               </motion.div>
                             );
@@ -323,9 +316,9 @@ export default function Gallery({ preview = false }: GalleryProps) {
                       {displayImages.map((img, displayIdx) => (
                         <motion.div
                           key={img.src}
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true }}
+                          initial={isMobile ? false : { opacity: 0, y: 20 }}
+                          whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+                          viewport={isMobile ? undefined : { once: true }}
                           transition={{ duration: 0.6 }}
                           onClick={() => openLightbox(displayIdx)}
                           className="group relative aspect-[4/3] rounded-3xl overflow-hidden cursor-pointer border border-white/10 bg-[#151515] shadow-lg"
@@ -342,6 +335,9 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                   className="w-full h-full object-cover transition-all duration-700 no-controls"
                                   muted
                                   playsInline
+                                  controls={false}
+                                  disablePictureInPicture={true}
+                                  preload="metadata"
                                 />
                                 <div className="absolute w-14 h-14 rounded-full bg-gold/90 text-black flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-white transition-all duration-300 z-20">
                                   <Play className="w-6 h-6 fill-current ml-0.5" />
@@ -365,14 +361,6 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                 {img.type === "video" ? <Play className="w-4 h-4 fill-current ml-0.5" /> : <Eye className="w-5 h-5" />}
                               </div>
                             </div>
-                            <div>
-                              <span className="text-[10px] text-gold tracking-widest font-bold uppercase mb-2 block">
-                                {img.category}
-                              </span>
-                              <h3 className="font-display text-lg font-bold text-white tracking-wide">
-                                {img.title}
-                              </h3>
-                            </div>
                           </div>
                         </motion.div>
                       ))}
@@ -384,9 +372,9 @@ export default function Gallery({ preview = false }: GalleryProps) {
                     {displayImages.map((img, displayIdx) => (
                       <motion.div
                         key={img.src}
-                        initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
+                        initial={isMobile ? false : { opacity: 0, y: 20 }}
+                        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+                        viewport={isMobile ? undefined : { once: true }}
                         transition={{ duration: isMobile ? 0.45 : 0.6 }}
                         onClick={() => openLightbox(displayIdx)}
                         className="group relative aspect-square md:aspect-[4/3] rounded-lg sm:rounded-3xl overflow-hidden cursor-pointer border border-white/10 bg-[#151515] shadow-lg"
@@ -409,6 +397,9 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                 }`}
                                 muted
                                 playsInline
+                                controls={false}
+                                disablePictureInPicture={true}
+                                preload="metadata"
                                 onLoadedData={() => setLoadedMedia((prev) => ({ ...prev, [img.src]: true }))}
                               />
                               <div className="absolute w-8 h-8 sm:w-14 sm:h-14 rounded-full bg-gold/90 text-black flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:bg-white transition-all duration-300 z-20">
@@ -453,9 +444,9 @@ export default function Gallery({ preview = false }: GalleryProps) {
                 {/* Homepage Preview View Button */}
                 {preview && validImages.length > 3 && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
+                    initial={isMobile ? false : { opacity: 0, y: 10 }}
+                    whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+                    viewport={isMobile ? undefined : { once: true }}
                     className="mt-2 sm:mt-6"
                   >
                     <Link

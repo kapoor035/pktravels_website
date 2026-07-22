@@ -74,9 +74,9 @@ export default function WhyChooseUs() {
             return (
               <motion.div
                 key={point.title}
-                initial={{ opacity: 0, y: isMobile ? 10 : 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
+                initial={isMobile ? false : { opacity: 0, y: 20 }}
+                whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+                viewport={isMobile ? undefined : { once: true, margin: "-100px" }}
                 transition={{ duration: isMobile ? 0.45 : 0.6, delay: isMobile ? idx * 0.04 : idx * 0.08 }}
                 className="p-3 sm:p-8 rounded-2xl sm:rounded-3xl bg-[#151515] border border-white/5 hover:border-gold/30 transition-all duration-500 hover:shadow-[0_0_20px_rgba(200,168,78,0.05)] flex flex-col justify-between h-full"
               >

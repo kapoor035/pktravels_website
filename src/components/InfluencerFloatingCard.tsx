@@ -10,6 +10,16 @@ export default function InfluencerFloatingCard() {
   const [isMuted, setIsMuted] = useState(true);
   const modalVideoRef = useRef<HTMLVideoElement>(null);
   const previewVideoRef = useRef<HTMLVideoElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+ 
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
  
   const openModal = () => {
     setIsModalOpen(true);
@@ -24,20 +34,14 @@ export default function InfluencerFloatingCard() {
     }
   };
  
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
- 
   useEffect(() => {
-    setShouldLoadVideo(true);
-  }, []);
- 
-  useEffect(() => {
-    if (shouldLoadVideo && previewVideoRef.current) {
+    if (previewVideoRef.current) {
       previewVideoRef.current.muted = true;
       previewVideoRef.current.play().catch((err) => {
-        console.log("Influencer preview video autoplay failed:", err);
+        console.log("Influencer preview video autoplay fallback failed:", err);
       });
     }
-  }, [shouldLoadVideo]);
+  }, []);
  
   useEffect(() => {
     const handleScroll = () => {
@@ -70,38 +74,39 @@ export default function InfluencerFloatingCard() {
       <AnimatePresence>
         {isVisible && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 50 }}
+            initial={isMobile ? { opacity: 0, y: 10 } : { opacity: 0, scale: 0.8, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 50 }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed bottom-20 sm:bottom-8 right-4 sm:right-10 z-40 cursor-pointer group"
+            exit={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.8, y: 50 }}
+            transition={isMobile ? { duration: 0.4 } : { duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed bottom-[76px] sm:bottom-8 right-3 sm:right-10 z-40 cursor-pointer group"
             onClick={openModal}
           >
-            <div className="relative w-32 h-44 sm:w-48 sm:h-64 rounded-2xl overflow-hidden glass-effect border border-gold/30 hover:border-gold transition-colors duration-500 shadow-2xl">
+            <div className="relative w-24 h-[132px] sm:w-48 sm:h-64 rounded-2xl overflow-hidden glass-effect border border-gold/30 hover:border-gold transition-colors duration-500 shadow-2xl">
               {/* Loop Preview Video */}
-              {shouldLoadVideo && (
-                <video
-                  ref={previewVideoRef}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  preload="metadata"
-                  className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700 no-controls"
-                >
-                  <source src="/assets/videos/influencer.mp4" type="video/mp4" />
-                </video>
-              )}
-
+              <video
+                ref={previewVideoRef}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls={false}
+                disablePictureInPicture={true}
+                controlsList="nodownload nofullscreen noremoteplayback"
+                preload="auto"
+                className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700 no-controls"
+              >
+                <source src="/assets/videos/influencer.mp4" type="video/mp4" />
+              </video>
+ 
               {/* Dark Overlay */}
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-300" />
-
+ 
               {/* Pulsing Play Button */}
-              <div className="absolute inset-0 flex flex-col items-center justify-center gap-2">
-                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gold/90 text-black flex items-center justify-center shadow-lg group-hover:bg-white group-hover:scale-110 transition-all duration-300 animate-pulse">
-                  <Play className="w-4 h-4 sm:w-5 sm:h-5 fill-current ml-0.5" />
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 sm:gap-2">
+                <div className="w-8 h-8 sm:w-12 sm:h-12 rounded-full bg-gold/90 text-black flex items-center justify-center shadow-lg group-hover:bg-white group-hover:scale-110 transition-all duration-300 animate-pulse">
+                  <Play className="w-3 h-3 sm:w-5 sm:h-5 fill-current ml-0.5" />
                 </div>
-                <span className="font-sans text-[9px] sm:text-xs font-bold text-white tracking-wider bg-black/60 px-2.5 py-1 rounded-full backdrop-blur-sm border border-white/10 uppercase">
+                <span className="font-sans text-[8px] sm:text-xs font-bold text-white tracking-wider bg-black/60 px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full backdrop-blur-sm border border-white/10 uppercase">
                   Watch Video
                 </span>
               </div>

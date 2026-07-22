@@ -8,7 +8,6 @@ import { siteConfig } from "@/config/site";
 export default function Hero() {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
  
   useEffect(() => {
@@ -21,17 +20,13 @@ export default function Hero() {
   }, []);
  
   useEffect(() => {
-    setShouldLoadVideo(true);
-  }, []);
- 
-  useEffect(() => {
-    if (shouldLoadVideo && videoRef.current) {
+    if (videoRef.current) {
       videoRef.current.muted = true;
       videoRef.current.play().catch((err) => {
-        console.log("Hero video autoplay failed:", err);
+        console.log("Hero video autoplay fallback failed:", err);
       });
     }
-  }, [shouldLoadVideo]);
+  }, []);
  
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -61,23 +56,25 @@ export default function Hero() {
   return (
     <section id="home" className="relative w-full h-[100dvh] sm:h-screen overflow-hidden flex items-center justify-center bg-[#0A0A0A]">
       {/* Background Drone Video with smooth loaded fade-in */}
-      {shouldLoadVideo && (
-        <motion.video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          onLoadedData={() => setVideoLoaded(true)}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: videoLoaded ? 1 : 0 }}
-          transition={{ duration: 1 }}
-          className="absolute top-0 left-0 w-full h-full object-cover z-0 no-controls"
-        >
-          <source src="/assets/hero/drone.mp4" type="video/mp4" />
-        </motion.video>
-      )}
+      <motion.video
+        ref={videoRef}
+        autoPlay
+        muted
+        loop
+        playsInline
+        webkit-playsinline="true"
+        controls={false}
+        disablePictureInPicture
+        controlsList="nodownload nofullscreen noremoteplayback"
+        preload="auto"
+        onLoadedData={() => setVideoLoaded(true)}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: videoLoaded ? 1 : 0 }}
+        transition={{ duration: 1 }}
+        className="absolute top-0 left-0 w-full h-full object-cover z-0 no-controls"
+      >
+        <source src="/assets/hero/drone.mp4" type="video/mp4" />
+      </motion.video>
 
       {/* Loader visual behind video to prevent layouts popping */}
       <AnimatePresence>

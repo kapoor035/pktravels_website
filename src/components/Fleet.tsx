@@ -84,9 +84,9 @@ export default function Fleet() {
           {/* Left Column: Image Container / Placeholder */}
           <div className="lg:col-span-7 flex flex-col justify-center">
             <motion.div
-              initial={{ opacity: 0, scale: isMobile ? 0.98 : 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              initial={isMobile ? false : { opacity: 0, scale: 0.95 }}
+              whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}
+              viewport={isMobile ? undefined : { once: true }}
               transition={{ duration: isMobile ? 0.5 : 0.8 }}
               className="relative aspect-video w-full max-w-[340px] sm:max-w-none mx-auto rounded-3xl overflow-hidden border border-gold/30 hover:border-gold/50 shadow-[0_0_30px_rgba(200,168,78,0.15)] hover:shadow-[0_0_40px_rgba(200,168,78,0.3)] group bg-black transition-all duration-500"
             >
@@ -106,7 +106,10 @@ export default function Fleet() {
                 muted
                 loop
                 playsInline
-                preload="metadata"
+                controls={false}
+                disablePictureInPicture={true}
+                controlsList="nodownload nofullscreen noremoteplayback"
+                preload="auto"
                 className="w-full h-full object-cover scale-100 group-hover:scale-[1.02] transition-transform duration-700 no-controls"
               >
                 <source src="/gallery/all/video-01.mp4" type="video/mp4" />
@@ -120,9 +123,9 @@ export default function Fleet() {
           {/* Right Column: Fleet Specs & Features */}
           <div className="lg:col-span-5 flex flex-col justify-between p-2">
             <motion.div
-              initial={{ opacity: 0, x: isMobile ? 10 : 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
+              initial={isMobile ? false : { opacity: 0, x: 20 }}
+              whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
+              viewport={isMobile ? undefined : { once: true }}
               transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.05 : 0.1 }}
             >
               <div className="flex items-center gap-2 mb-4 text-gold">
@@ -159,9 +162,9 @@ export default function Fleet() {
 
             {/* Check Availability CTA */}
             <motion.div
-              initial={{ opacity: 0, y: isMobile ? 8 : 15 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              initial={isMobile ? false : { opacity: 0, y: 15 }}
+              whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+              viewport={isMobile ? undefined : { once: true }}
               transition={{ duration: isMobile ? 0.45 : 0.6, delay: isMobile ? 0.08 : 0.2 }}
               className="mt-4 sm:mt-6"
             >

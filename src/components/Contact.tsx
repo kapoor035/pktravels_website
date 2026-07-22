@@ -130,10 +130,10 @@ export default function Contact() {
   const directionsUrl = "https://www.google.com/maps/search/?api=1&query=PK+Travels+Plot+No.+484+Sector+19+Dwarka+New+Delhi+110075";
 
   return (
-    <section id="contact" className="py-16 md:py-32 bg-[#0A0A0A] border-b border-white/5 relative">
+    <section id="contact" className="py-10 md:py-32 bg-[#0A0A0A] border-b border-white/5 relative">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-6 sm:mb-20">
           <div className="flex items-center justify-center gap-3 mb-4">
             <span className="w-6 h-[1px] bg-gold" />
             <span className="text-xs font-bold text-gold tracking-[0.3em] uppercase">Connect With Us</span>
@@ -148,7 +148,7 @@ export default function Contact() {
         </div>
 
         {/* Segmented Tab Controller for Mobile */}
-        <div className="flex lg:hidden w-full bg-[#151515] border border-white/5 p-1 rounded-2xl mb-8 max-w-xs mx-auto">
+        <div className="flex lg:hidden w-full bg-[#151515] border border-white/5 p-1 rounded-2xl mb-5 max-w-xs mx-auto">
           <button
             onClick={() => setActiveMobileTab("connect")}
             className={`flex-1 py-2.5 rounded-xl font-sans font-bold text-xs uppercase tracking-wider transition-all duration-300 ${
@@ -174,25 +174,25 @@ export default function Contact() {
         {/* Contact Layout */}
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-start">
           {/* Left Column: Direct Links & Map */}
-          <div className={`lg:col-span-5 flex-col gap-6 sm:gap-8 w-full ${activeMobileTab === "connect" ? "flex" : "hidden lg:flex"}`}>
-            <div className="p-4 sm:p-8 rounded-3xl bg-[#151515] border border-white/5 flex flex-col gap-4 sm:gap-6 w-full max-w-[340px] sm:max-w-none mx-auto">
-              <h3 className="font-display text-base sm:text-xl font-bold text-white tracking-wide border-b border-white/5 pb-3 sm:pb-4">
+          <div className={`lg:col-span-5 flex-col gap-4 sm:gap-8 w-full ${activeMobileTab === "connect" ? "flex" : "hidden lg:flex"}`}>
+            <div className="p-3.5 sm:p-8 rounded-3xl bg-[#151515] border border-white/5 flex flex-col gap-3 sm:gap-6 w-full max-w-[340px] sm:max-w-none mx-auto">
+              <h3 className="font-display text-sm sm:text-xl font-bold text-white tracking-wide border-b border-white/5 pb-2 sm:pb-4">
                 PK Chauffeur Desk
               </h3>
               
               {/* Phone Detail (Dual Numbers Clickable) */}
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0">
-                  <Phone className="w-3.5 h-3.5 sm:w-4 h-4" />
+              <div className="flex items-start gap-2.5 sm:gap-4">
+                <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0">
+                  <Phone className="w-3 h-3 sm:w-4 h-4" />
                 </div>
-                <div className="flex flex-col gap-1 sm:gap-1.5">
+                <div className="flex flex-col gap-0.5 sm:gap-1.5">
                   <p className="font-sans text-[10px] sm:text-xs text-white/55 uppercase tracking-widest">Call Booking Support</p>
-                  <div className="flex flex-col gap-0.5 sm:gap-1">
+                  <div className="flex flex-col gap-0 sm:gap-1">
                     {siteConfig.phones.map((phone) => (
                       <a 
                         key={phone.raw}
                         href={`tel:${phone.raw}`} 
-                        className="font-display text-sm sm:text-lg font-bold text-white hover:text-gold transition-colors w-fit"
+                        className="font-display text-[13px] sm:text-lg font-bold text-white hover:text-gold transition-colors w-fit"
                       >
                         {phone.display}
                       </a>
@@ -202,17 +202,17 @@ export default function Contact() {
               </div>
 
               {/* WhatsApp Detail */}
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 shrink-0">
-                  <MessageSquare className="w-3.5 h-3.5 sm:w-4 h-4" />
+              <div className="flex items-start gap-2.5 sm:gap-4">
+                <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-400 shrink-0">
+                  <MessageSquare className="w-3 h-3 sm:w-4 h-4" />
                 </div>
-                <div>
+                <div className="flex flex-col gap-0.5 sm:gap-1.5">
                   <p className="font-sans text-[10px] sm:text-xs text-white/55 uppercase tracking-widest">WhatsApp Direct</p>
                   <a 
                     href={`https://wa.me/${siteConfig.whatsapp.number}?text=${encodeURIComponent(siteConfig.whatsapp.defaultText)}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="font-display text-sm sm:text-lg font-bold text-white hover:text-emerald-400 transition-colors block mt-0.5"
+                    className="font-display text-[13px] sm:text-lg font-bold text-white hover:text-emerald-400 transition-colors block mt-0.5"
                   >
                     {siteConfig.whatsapp.display}
                   </a>
@@ -220,15 +220,15 @@ export default function Contact() {
               </div>
 
               {/* Email Detail */}
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 shrink-0">
-                  <Mail className="w-3.5 h-3.5 sm:w-4 h-4" />
+              <div className="flex items-start gap-2.5 sm:gap-4">
+                <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-400 shrink-0">
+                  <Mail className="w-3 h-3 sm:w-4 h-4" />
                 </div>
-                <div>
+                <div className="flex flex-col gap-0.5 sm:gap-1.5">
                   <p className="font-sans text-[10px] sm:text-xs text-white/55 uppercase tracking-widest">Email Enquiries</p>
                   <a 
                     href={`mailto:${siteConfig.email}`} 
-                    className="font-display text-sm sm:text-lg font-bold text-white hover:text-gold transition-colors block mt-0.5 break-all"
+                    className="font-display text-[13px] sm:text-lg font-bold text-white hover:text-gold transition-colors block mt-0.5 break-all"
                   >
                     {siteConfig.email}
                   </a>
@@ -236,18 +236,18 @@ export default function Contact() {
               </div>
 
               {/* Instagram Detail */}
-              <div className="flex items-start gap-3 sm:gap-4">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-pink-500/10 flex items-center justify-center text-pink-400 shrink-0">
-                  <Instagram className="w-3.5 h-3.5 sm:w-4 h-4" />
+              <div className="flex items-start gap-2.5 sm:gap-4">
+                <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-pink-500/10 flex items-center justify-center text-pink-400 shrink-0">
+                  <Instagram className="w-3 h-3 sm:w-4 h-4" />
                 </div>
-                <div>
+                <div className="flex flex-col gap-0.5 sm:gap-1.5">
                   <p className="font-sans text-[10px] sm:text-xs text-white/55 uppercase tracking-widest">Instagram Profile</p>
                   <a 
                     href={siteConfig.instagramUrl} 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     aria-label="Follow PK Travels on Instagram"
-                    className="font-display text-sm sm:text-lg font-bold text-white hover:text-gold transition-colors block mt-0.5 w-fit"
+                    className="font-display text-[13px] sm:text-lg font-bold text-white hover:text-gold transition-colors block mt-0.5 w-fit"
                   >
                     @pktravels_kapoor
                   </a>
@@ -259,14 +259,14 @@ export default function Contact() {
                 href={directionsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-start gap-3 sm:gap-4 hover:text-gold transition-colors group/addr"
+                className="flex items-start gap-2.5 sm:gap-4 hover:text-gold transition-colors group/addr"
               >
-                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0 group-hover/addr:bg-gold/20 transition-colors">
-                  <MapPin className="w-3.5 h-3.5 sm:w-4 h-4" />
+                <div className="w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-gold/10 flex items-center justify-center text-gold shrink-0 group-hover/addr:bg-gold/20 transition-colors">
+                  <MapPin className="w-3 h-3 sm:w-4 h-4" />
                 </div>
-                <div>
+                <div className="flex flex-col gap-0.5 sm:gap-1.5">
                   <p className="font-sans text-[10px] sm:text-xs text-white/55 uppercase tracking-widest">Office Address</p>
-                  <p className="font-sans text-sm text-secondary group-hover/addr:text-gold mt-0.5 leading-relaxed transition-colors">
+                  <p className="font-sans text-xs sm:text-sm text-secondary group-hover/addr:text-gold mt-0.5 leading-relaxed transition-colors">
                     {siteConfig.address.full}
                   </p>
                 </div>
@@ -290,26 +290,26 @@ export default function Contact() {
 
           {/* Right Column: Quote Form */}
           <div className={`lg:col-span-7 w-full ${activeMobileTab === "quote" ? "block" : "hidden lg:block"}`}>
-            <div className="p-4 sm:p-10 rounded-3xl bg-[#151515] border border-white/5 relative overflow-hidden shadow-2xl max-w-[340px] sm:max-w-none mx-auto w-full">
+            <div className="p-3.5 sm:p-10 rounded-3xl bg-[#151515] border border-white/5 relative overflow-hidden shadow-2xl max-w-[340px] sm:max-w-none mx-auto w-full">
               {/* Background gradient decorative element */}
               <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-gold/2 rounded-full filter blur-[80px] pointer-events-none" />
 
-              <h3 className="font-display text-lg sm:text-2xl font-bold text-white mb-4 sm:mb-6">
+              <h3 className="font-display text-base sm:text-2xl font-bold text-white mb-2.5 sm:mb-6">
                 Request a Custom Quote
               </h3>
 
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-6 relative">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 sm:gap-6 relative">
                 <AnimatePresence mode="wait">
                   {status !== "success" ? (
                     <motion.div
                       key="form-fields"
                       initial={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
-                      className="flex flex-col gap-4 sm:gap-6"
+                      className="flex flex-col gap-2.5 sm:gap-6"
                     >
-                      <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                      <div className="grid sm:grid-cols-2 gap-2.5 sm:gap-6">
                         {/* Name input */}
-                        <div className="flex flex-col gap-1.5 sm:gap-2">
+                        <div className="flex flex-col gap-0.5 sm:gap-2">
                           <label htmlFor="name" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Full Name</label>
                           <input
                             type="text"
@@ -320,12 +320,12 @@ export default function Contact() {
                             value={formData.name}
                             onChange={handleInputChange}
                             placeholder="John Doe"
-                            className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder-white/20 outline-none transition-all disabled:opacity-50"
+                            className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3.5 py-1.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder-white/20 outline-none transition-all disabled:opacity-50"
                           />
                         </div>
 
                         {/* Phone input */}
-                        <div className="flex flex-col gap-1.5 sm:gap-2">
+                        <div className="flex flex-col gap-0.5 sm:gap-2">
                           <label htmlFor="phone" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Contact Number</label>
                           <input
                             type="tel"
@@ -336,14 +336,14 @@ export default function Contact() {
                             value={formData.phone}
                             onChange={handleInputChange}
                             placeholder="+91 99999 99999"
-                            className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder-white/20 outline-none transition-all disabled:opacity-50"
+                            className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3.5 py-1.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder-white/20 outline-none transition-all disabled:opacity-50"
                           />
                         </div>
                       </div>
 
-                      <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
+                      <div className="grid sm:grid-cols-2 gap-2.5 sm:gap-6">
                         {/* Email input */}
-                        <div className="flex flex-col gap-1.5 sm:gap-2">
+                        <div className="flex flex-col gap-0.5 sm:gap-2">
                           <label htmlFor="email" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Email Address</label>
                           <input
                             type="email"
@@ -354,12 +354,12 @@ export default function Contact() {
                             value={formData.email}
                             onChange={handleInputChange}
                             placeholder="john@example.com"
-                            className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder-white/20 outline-none transition-all disabled:opacity-50"
+                            className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3.5 py-1.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder-white/20 outline-none transition-all disabled:opacity-50"
                           />
                         </div>
 
                         {/* Date input */}
-                        <div className="flex flex-col gap-1.5 sm:gap-2">
+                        <div className="flex flex-col gap-0.5 sm:gap-2">
                           <label htmlFor="date" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Journey Date</label>
                           <div className="relative">
                             <input
@@ -376,7 +376,7 @@ export default function Contact() {
                               disabled={status === "loading"}
                               value={formatDateFriendly(formData.date)}
                               placeholder="Select Date"
-                              className="w-full bg-black/40 border border-white/10 focus:border-gold rounded-xl pl-3 pr-10 py-2 sm:pl-4 sm:pr-10 sm:py-3 text-xs sm:text-sm text-white cursor-pointer outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed select-none"
+                              className="w-full bg-black/40 border border-white/10 focus:border-gold rounded-xl pl-3.5 pr-10 py-1.5 sm:pl-4 sm:pr-10 sm:py-3 text-xs sm:text-sm text-white cursor-pointer outline-none transition-all disabled:opacity-50 disabled:cursor-not-allowed select-none"
                             />
                             <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gold pointer-events-none">
                               <Calendar className="w-4 h-4" />
@@ -386,7 +386,7 @@ export default function Contact() {
                       </div>
 
                       {/* Service Select */}
-                      <div className="flex flex-col gap-1.5 sm:gap-2">
+                      <div className="flex flex-col gap-0.5 sm:gap-2">
                         <label htmlFor="service" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Service Type</label>
                         <div className="relative">
                           <select
@@ -395,7 +395,7 @@ export default function Contact() {
                             disabled={status === "loading"}
                             value={formData.service}
                             onChange={handleInputChange}
-                            className="w-full bg-black/40 border border-white/10 focus:border-gold rounded-xl pl-3 pr-10 py-2.5 sm:pl-4 sm:pr-10 sm:py-3 text-xs sm:text-sm text-white outline-none appearance-none transition-all disabled:opacity-50 cursor-pointer select-none"
+                            className="w-full bg-black/40 border border-white/10 focus:border-gold rounded-xl pl-3.5 pr-10 py-1.5 sm:pl-4 sm:pr-10 sm:py-3 text-xs sm:text-sm text-white outline-none appearance-none transition-all disabled:opacity-50 cursor-pointer select-none"
                           >
                             <option value="Weddings" className="bg-[#151515]">Wedding Transportation</option>
                             <option value="Corporate" className="bg-[#151515]">Corporate Travel</option>
@@ -411,7 +411,7 @@ export default function Contact() {
                       </div>
 
                       {/* Message input */}
-                      <div className="flex flex-col gap-1.5 sm:gap-2">
+                      <div className="flex flex-col gap-0.5 sm:gap-2">
                         <label htmlFor="message" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Your Requirements</label>
                         <textarea
                           id="message"
@@ -422,7 +422,7 @@ export default function Contact() {
                           value={formData.message}
                           onChange={handleInputChange}
                           placeholder="Please describe details about pickup points, drop coordinates, and itinerary..."
-                          className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3 py-2 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder-white/20 outline-none transition-all resize-none disabled:opacity-50"
+                          className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3.5 py-1.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder-white/20 outline-none transition-all resize-none disabled:opacity-50"
                         />
                       </div>
 
@@ -442,7 +442,7 @@ export default function Contact() {
                       <button
                         type="submit"
                         disabled={status === "loading"}
-                        className="flex items-center justify-center gap-2 font-sans font-bold text-sm tracking-wider text-black bg-gold hover:bg-gold-hover py-3.5 sm:py-4 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(200,168,78,0.1)] mt-2 disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed"
+                        className="flex items-center justify-center gap-2 font-sans font-bold text-xs sm:text-sm tracking-wider text-black bg-gold hover:bg-gold-hover py-2.5 sm:py-4 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(200,168,78,0.1)] mt-0.5 disabled:opacity-60 cursor-pointer disabled:cursor-not-allowed"
                       >
                         {status === "loading" ? (
                           <>
