@@ -56,25 +56,29 @@ export default function Hero() {
   return (
     <section id="home" className="relative w-full h-[100dvh] sm:h-screen overflow-hidden flex items-center justify-center bg-[#0A0A0A]">
       {/* Background Drone Video with smooth loaded fade-in */}
-      <motion.video
-        ref={videoRef}
-        autoPlay
-        muted
-        loop
-        playsInline
-        webkit-playsinline="true"
-        controls={false}
-        disablePictureInPicture
-        controlsList="nodownload nofullscreen noremoteplayback"
-        preload="auto"
-        onLoadedData={() => setVideoLoaded(true)}
+      <motion.div
         initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
         animate={isMobile ? { opacity: 1 } : { opacity: videoLoaded ? 1 : 0 }}
         transition={{ duration: 1 }}
-        className="absolute top-0 left-0 w-full h-full object-cover z-0 no-controls"
+        className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none"
       >
-        <source src="/assets/hero/drone.mp4" type="video/mp4" />
-      </motion.video>
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          controls={false}
+          disablePictureInPicture={true}
+          controlsList="nodownload nofullscreen noremoteplayback"
+          preload="auto"
+          onLoadedData={() => setVideoLoaded(true)}
+          className="w-full h-full object-cover no-controls pointer-events-none"
+          suppressHydrationWarning
+        >
+          <source src="/assets/hero/drone.mp4" type="video/mp4" />
+        </video>
+      </motion.div>
 
       {/* Loader visual behind video to prevent layouts popping */}
       <AnimatePresence>

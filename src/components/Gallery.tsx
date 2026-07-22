@@ -43,19 +43,19 @@ export default function Gallery({ preview = false }: GalleryProps) {
       try {
         const response = await fetch("/api/gallery");
         const data = await response.json();
-        
+
         if (data.images && data.images.length > 0) {
           const resolved = data.images.map((pathStr: string): GalleryItem => {
             const fileName = pathStr.split("/").pop() || "";
             const ext = pathStr.split(".").pop()?.toLowerCase() || "";
-            
+
             let category: "All" | "45 Seater" | "50 Seater" | "60 Seater" | "65 Seater" = "All";
             let type: "image" | "video" = "image";
-            
+
             if (["mp4", "mov", "webm"].includes(ext)) {
               type = "video";
             }
-            
+
             if (pathStr.includes("/gallery/45-seater/")) {
               category = "45 Seater";
             } else if (pathStr.includes("/gallery/50-seater/")) {
@@ -67,10 +67,10 @@ export default function Gallery({ preview = false }: GalleryProps) {
             } else {
               category = "All";
             }
-            
+
             const title = fileName.replace(/\.[^/.]+$/, "").replace(/-/g, " ");
             const formattedTitle = title.charAt(0).toUpperCase() + title.slice(1);
-            
+
             return {
               src: pathStr,
               title: formattedTitle,
@@ -94,8 +94,8 @@ export default function Gallery({ preview = false }: GalleryProps) {
   }, []);
 
   // Filter gallery items by active tab (only for full gallery page)
-  const filteredImages = preview 
-    ? validImages 
+  const filteredImages = preview
+    ? validImages
     : validImages.filter((img) => activeTab === "All" || img.category === activeTab);
 
   // Sliced items for homepage preview
@@ -125,7 +125,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
   }, []);
 
   const closeLightbox = useCallback(() => setActiveIdx(null), []);
-  
+
   const showPrev = useCallback((e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     if (activeIdx !== null && displayImages.length > 0) {
@@ -166,7 +166,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > 50;
     const isRightSwipe = distance < -50;
-    
+
     if (isLeftSwipe) {
       showNext();
     } else if (isRightSwipe) {
@@ -203,11 +203,10 @@ export default function Gallery({ preview = false }: GalleryProps) {
                   setActiveTab(tab);
                   setActiveIdx(null);
                 }}
-                className={`font-sans text-[10px] sm:text-xs font-bold tracking-widest uppercase px-4 py-2 sm:px-6 sm:py-3 rounded-full border transition-all duration-300 cursor-pointer select-none ${
-                  activeTab === tab
+                className={`font-sans text-[10px] sm:text-xs font-bold tracking-widest uppercase px-4 py-2 sm:px-6 sm:py-3 rounded-full border transition-all duration-300 cursor-pointer select-none ${activeTab === tab
                     ? "bg-gold text-black border-gold shadow-[0_0_15px_rgba(200,168,78,0.25)]"
                     : "bg-[#151515] text-secondary border-white/5 hover:text-white hover:border-gold/30"
-                }`}
+                  }`}
               >
                 {tab}
               </button>
@@ -261,7 +260,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                     <div className="relative w-full h-full bg-black flex items-center justify-center">
                                       <video
                                         src={img.src}
-                                        className="w-full h-full object-cover no-controls"
+                                        className="w-full h-full object-cover no-controls pointer-events-none"
                                         autoPlay
                                         muted
                                         loop
@@ -270,6 +269,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                         disablePictureInPicture={true}
                                         controlsList="nodownload nofullscreen noremoteplayback"
                                         preload="metadata"
+                                        suppressHydrationWarning
                                       />
                                       <div className="absolute w-8 h-8 rounded-full bg-gold/90 text-black flex items-center justify-center shadow-lg z-20">
                                         <Play className="w-4 h-4 fill-current ml-0.5" />
@@ -302,9 +302,8 @@ export default function Gallery({ preview = false }: GalleryProps) {
                               e.stopPropagation();
                               setActiveHighlightIdx(idx);
                             }}
-                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                              activeHighlightIdx === idx ? "w-5 bg-gold" : "bg-white/20"
-                            }`}
+                            className={`w-2 h-2 rounded-full transition-all duration-300 ${activeHighlightIdx === idx ? "w-5 bg-gold" : "bg-white/20"
+                              }`}
                             aria-label={`Go to slide ${idx + 1}`}
                           />
                         ))}
@@ -354,7 +353,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                               />
                             )}
                           </div>
-                          
+
                           {/* Hover Glassmorphic Overlay */}
                           <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-6 z-10">
                             <div className="flex justify-end">
@@ -386,17 +385,16 @@ export default function Gallery({ preview = false }: GalleryProps) {
                           {!loadedMedia[img.src] && (
                             <div className="absolute inset-0 bg-[#151515] skeleton-shimmer z-25" />
                           )}
-                          
+
                           {/* Premium subtle default black overlay (20% to 5% on hover) */}
                           <div className="absolute inset-0 bg-black/20 group-hover:bg-black/5 transition-colors duration-500 z-10 pointer-events-none" />
-                          
+
                           {img.type === "video" ? (
                             <div className="relative w-full h-full bg-black flex items-center justify-center">
                               <video
                                 src={img.src}
-                                className={`w-full h-full object-cover transition-all duration-700 no-controls ${
-                                  loadedMedia[img.src] ? "opacity-75 scale-100 group-hover:scale-102" : "opacity-0 scale-95"
-                                }`}
+                                className={`w-full h-full object-cover transition-all duration-700 no-controls ${loadedMedia[img.src] ? "opacity-75 scale-100 group-hover:scale-102" : "opacity-0 scale-95"
+                                  }`}
                                 muted
                                 playsInline
                                 controls={false}
@@ -414,14 +412,13 @@ export default function Gallery({ preview = false }: GalleryProps) {
                               alt={img.title}
                               fill
                               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                              className={`object-cover transition-all duration-700 group-hover:scale-[1.025] ${
-                                loadedMedia[img.src] ? "opacity-100 scale-100" : "opacity-0 scale-95"
-                              }`}
+                              className={`object-cover transition-all duration-700 group-hover:scale-[1.025] ${loadedMedia[img.src] ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                                }`}
                               onLoad={() => setLoadedMedia((prev) => ({ ...prev, [img.src]: true }))}
                             />
                           )}
                         </div>
-                        
+
                         {/* Hover Glassmorphic Overlay (Desktop only) */}
                         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex-col justify-between p-6 z-10 hidden sm:flex">
                           <div className="flex justify-end">
@@ -478,7 +475,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                   <p className="font-sans text-xs sm:text-sm text-secondary leading-relaxed mb-6">
                     Fleet images will be added soon.
                   </p>
-                  
+
                   {!preview ? (
                     <div className="bg-black/50 border border-white/5 py-4 px-5 rounded-xl font-mono text-[10px] sm:text-xs text-gold/90 text-left select-all">
                       📁 public/gallery/<br />
@@ -561,7 +558,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                   priority
                 />
               )}
-              
+
               <div className="text-center mt-6">
                 <span className="text-[10px] text-gold tracking-widest font-bold uppercase mb-1 block">
                   {displayImages[activeIdx].category}

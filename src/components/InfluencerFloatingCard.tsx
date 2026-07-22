@@ -93,7 +93,8 @@ export default function InfluencerFloatingCard() {
                 disablePictureInPicture={true}
                 controlsList="nodownload nofullscreen noremoteplayback"
                 preload="auto"
-                className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700 no-controls"
+                className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700 no-controls pointer-events-none"
+                suppressHydrationWarning
               >
                 <source src="/assets/videos/influencer.mp4" type="video/mp4" />
               </video>

@@ -111,7 +111,8 @@ export default function Fleet() {
                 disablePictureInPicture={true}
                 controlsList="nodownload nofullscreen noremoteplayback"
                 preload="auto"
-                className="w-full h-full object-cover scale-100 group-hover:scale-[1.02] transition-transform duration-700 no-controls"
+                className="w-full h-full object-cover scale-100 group-hover:scale-[1.02] transition-transform duration-700 no-controls pointer-events-none"
+                suppressHydrationWarning
               >
                 <source src="/gallery/all/video-01.mp4" type="video/mp4" />
               </video>
