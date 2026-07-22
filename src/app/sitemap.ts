@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://pktraveldelhi.com";
+  const baseUrl = "https://pktravelsdelhi.com";
   return [
     {
       url: baseUrl,
