@@ -1,10 +1,33 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import { Eye, X, ChevronLeft, ChevronRight, Image as ImageIcon, ArrowRight, Play } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import Image from "next/image";
+
+interface MemoizedGalleryVideoProps {
+  src: string;
+}
+
+const MemoizedGalleryVideo = memo(({ src }: MemoizedGalleryVideoProps) => {
+  return (
+    <video
+      src={src}
+      className="w-full h-full object-cover no-controls pointer-events-none"
+      autoPlay
+      muted
+      loop
+      playsInline
+      controls={false}
+      disablePictureInPicture={true}
+      controlsList="nodownload nofullscreen noremoteplayback"
+      preload="metadata"
+      suppressHydrationWarning
+    />
+  );
+});
+MemoizedGalleryVideo.displayName = "MemoizedGalleryVideo";
 
 interface GalleryItem {
   src: string;
@@ -258,19 +281,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                 <div className="relative w-full h-full bg-[#151515]">
                                   {img.type === "video" ? (
                                     <div className="relative w-full h-full bg-black flex items-center justify-center">
-                                      <video
-                                        src={img.src}
-                                        className="w-full h-full object-cover no-controls pointer-events-none"
-                                        autoPlay
-                                        muted
-                                        loop
-                                        playsInline
-                                        controls={false}
-                                        disablePictureInPicture={true}
-                                        controlsList="nodownload nofullscreen noremoteplayback"
-                                        preload="metadata"
-                                        suppressHydrationWarning
-                                      />
+                                      <MemoizedGalleryVideo src={img.src} />
                                       <div className="absolute w-8 h-8 rounded-full bg-gold/90 text-black flex items-center justify-center shadow-lg z-20">
                                         <Play className="w-4 h-4 fill-current ml-0.5" />
                                       </div>

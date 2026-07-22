@@ -11,3 +11,23 @@
 [Fleet Video Event: pause] - paused: true, readyState: 1, currentTime: 0
 [Fleet Video Event: suspend] - paused: true, readyState: 0, currentTime: 0
 [Fleet Video Event: suspend] - paused: true, readyState: 1, currentTime: 0
+[Fleet Render #1] - isMobile: false
+[Fleet Render #2] - isMobile: false
+[Fleet Video Ref Callback] Initialized. Render: 2, Node tag: VIDEO
+[Fleet Mount useEffect] Triggered. Render: 2
+[Fleet Mount useEffect] Initial Video State:
+- paused: true
+- readyState: 0
+- currentTime: 0
+[Fleet Render #4] - isMobile: true
+- muted: true
+[Fleet Mount useEffect] play() returned Promise
+[Fleet Render #3] - isMobile: true
+[Fleet Video Event: play] - Render: 4, paused: false, readyState: 0, currentTime: 0, Node Identical to Original: true
+[Fleet Video Event: waiting] - Render: 4, paused: false, readyState: 0, currentTime: 0, Node Identical to Original: true
+[Fleet Video Event: suspend] - Render: 4, paused: false, readyState: 0, currentTime: 0, Node Identical to Original: true
+[Fleet Video Event: pause] - Render: 4, paused: true, readyState: 1, currentTime: 0, Node Identical to Original: true
+[Fleet Mount useEffect] play() promise REJECTED: AbortError - The play() request was interrupted because video-only background media was paused to save power. https://goo.gl/LdLk22
+[Fleet Video Event: suspend] - Render: 4, paused: true, readyState: 1, currentTime: 0, Node Identical to Original: true
+[Fleet Video Ref Callback] Node set to null. Render: 4
+[Fleet Unmount cleanup] Triggered.

@@ -1,8 +1,32 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { Play, X, Volume2, VolumeX } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+
+interface MemoizedInfluencerVideoProps {
+  videoRef: React.RefObject<HTMLVideoElement | null>;
+}
+
+const MemoizedInfluencerVideo = memo(({ videoRef }: MemoizedInfluencerVideoProps) => {
+  return (
+    <video
+      ref={videoRef}
+      src="/assets/videos/influencer.mp4"
+      autoPlay
+      muted
+      loop
+      playsInline
+      controls={false}
+      disablePictureInPicture={true}
+      controlsList="nodownload nofullscreen noremoteplayback"
+      preload="auto"
+      className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700 no-controls pointer-events-none"
+      suppressHydrationWarning
+    />
+  );
+});
+MemoizedInfluencerVideo.displayName = "MemoizedInfluencerVideo";
 
 export default function InfluencerFloatingCard() {
   const [isVisible, setIsVisible] = useState(true);
@@ -83,20 +107,7 @@ export default function InfluencerFloatingCard() {
           >
             <div className="relative w-24 h-[132px] sm:w-48 sm:h-64 rounded-2xl overflow-hidden glass-effect border border-gold/30 hover:border-gold transition-colors duration-500 shadow-2xl">
               {/* Loop Preview Video */}
-              <video
-                ref={previewVideoRef}
-                src="/assets/videos/influencer.mp4"
-                autoPlay
-                muted
-                loop
-                playsInline
-                controls={false}
-                disablePictureInPicture={true}
-                controlsList="nodownload nofullscreen noremoteplayback"
-                preload="auto"
-                className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700 no-controls pointer-events-none"
-                suppressHydrationWarning
-              />
+              <MemoizedInfluencerVideo videoRef={previewVideoRef} />
  
               {/* Dark Overlay */}
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-300" />

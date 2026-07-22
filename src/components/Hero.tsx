@@ -1,14 +1,44 @@
 "use client";
  
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, CheckCircle, Phone, Calendar } from "lucide-react";
 import { siteConfig } from "@/config/site";
+
+interface MemoizedHeroVideoProps {
+  videoRef: React.RefObject<HTMLVideoElement | null>;
+  onLoadedData: () => void;
+}
+
+const MemoizedHeroVideo = memo(({ videoRef, onLoadedData }: MemoizedHeroVideoProps) => {
+  return (
+    <video
+      ref={videoRef}
+      src="/assets/hero/drone.mp4"
+      autoPlay
+      muted
+      loop
+      playsInline
+      controls={false}
+      disablePictureInPicture={true}
+      controlsList="nodownload nofullscreen noremoteplayback"
+      preload="auto"
+      onLoadedData={onLoadedData}
+      className="w-full h-full object-cover no-controls pointer-events-none"
+      suppressHydrationWarning
+    />
+  );
+});
+MemoizedHeroVideo.displayName = "MemoizedHeroVideo";
  
 export default function Hero() {
   const [videoLoaded, setVideoLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleVideoLoaded = useCallback(() => {
+    setVideoLoaded(true);
+  }, []);
  
   useEffect(() => {
     const checkMobile = () => {
@@ -62,21 +92,7 @@ export default function Hero() {
         transition={{ duration: 1 }}
         className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none"
       >
-        <video
-          ref={videoRef}
-          src="/assets/hero/drone.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          controls={false}
-          disablePictureInPicture={true}
-          controlsList="nodownload nofullscreen noremoteplayback"
-          preload="auto"
-          onLoadedData={() => setVideoLoaded(true)}
-          className="w-full h-full object-cover no-controls pointer-events-none"
-          suppressHydrationWarning
-        />
+        <MemoizedHeroVideo videoRef={videoRef} onLoadedData={handleVideoLoaded} />
       </motion.div>
 
       {/* Loader visual behind video to prevent layouts popping */}
