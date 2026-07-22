@@ -12,7 +12,7 @@ export const siteConfig = {
     number: "919911016644",
     defaultText: "Hello PK Travels, I'm interested in booking a luxury coach charter.",
   },
-  email: "pktravelsdwarka@gmail.com",
+  email: "pktravelsdelhi1@gmail.com",
   
   // Office Location (Plot No. 484, Sector 19, Dwarka, New Delhi - 110075)
   address: {
@@ -32,7 +32,7 @@ export const siteConfig = {
   metadata: {
     title: "PK Travel Delhi | Premium Luxury Bus Rental in Delhi NCR",
     description: "Experience premium luxury coach bus rentals in Delhi NCR. Book high-end buses for weddings, corporate events, school trips, and outstation tours.",
-    url: "https://pktraveldelhi.com",
+    url: "https://pktravelsdelhi.com",
   },
 };
 export type SiteConfig = typeof siteConfig;

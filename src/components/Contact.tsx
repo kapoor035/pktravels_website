@@ -31,6 +31,9 @@ export default function Contact() {
     phone: "",
     date: "",
     service: "Weddings",
+    pickup: "",
+    destination: "",
+    passengers: "",
     message: "",
   });
   
@@ -73,11 +76,28 @@ export default function Contact() {
       }
 
       // 3. Validate Date (not in the past)
+      if (!formData.date) {
+        throw new Error("Please select your journey date.");
+      }
       const selectedDate = new Date(formData.date);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
       if (selectedDate < today) {
         throw new Error("The journey date cannot be in the past.");
+      }
+
+      // 4. Validate Pickup and Destination
+      if (!formData.pickup.trim()) {
+        throw new Error("Please enter a pickup location.");
+      }
+      if (!formData.destination.trim()) {
+        throw new Error("Please enter a destination.");
+      }
+
+      // 5. Validate Passengers
+      const passengerCount = Number(formData.passengers);
+      if (isNaN(passengerCount) || passengerCount <= 0) {
+        throw new Error("Please enter a valid number of passengers (at least 1).");
       }
 
       const response = await fetch("/api/contact", {
@@ -102,6 +122,9 @@ export default function Contact() {
         phone: "",
         date: "",
         service: "Weddings",
+        pickup: "",
+        destination: "",
+        passengers: "",
         message: "",
       });
 
@@ -385,28 +408,81 @@ export default function Contact() {
                         </div>
                       </div>
 
-                      {/* Service Select */}
-                      <div className="flex flex-col gap-0.5 sm:gap-2">
-                        <label htmlFor="service" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Service Type</label>
-                        <div className="relative">
-                          <select
-                            id="service"
-                            name="service"
-                            disabled={status === "loading"}
-                            value={formData.service}
-                            onChange={handleInputChange}
-                            className="w-full bg-black/40 border border-white/10 focus:border-gold rounded-xl pl-3.5 pr-10 py-1.5 sm:pl-4 sm:pr-10 sm:py-3 text-xs sm:text-sm text-white outline-none appearance-none transition-all disabled:opacity-50 cursor-pointer select-none"
-                          >
-                            <option value="Weddings" className="bg-[#151515]">Wedding Transportation</option>
-                            <option value="Corporate" className="bg-[#151515]">Corporate Travel</option>
-                            <option value="Schools" className="bg-[#151515]">School & College Trip</option>
-                            <option value="Outstation" className="bg-[#151515]">Outstation Tours</option>
-                            <option value="Airport" className="bg-[#151515]">Airport Transfer</option>
-                            <option value="Others" className="bg-[#151515]">Family / Other Functions</option>
-                          </select>
-                          <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gold pointer-events-none">
-                            <ChevronDown className="w-4 h-4" />
+                      <div className="grid sm:grid-cols-2 gap-2.5 sm:gap-6">
+                        {/* Service Select */}
+                        <div className="flex flex-col gap-0.5 sm:gap-2">
+                          <label htmlFor="service" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Service Type</label>
+                          <div className="relative">
+                            <select
+                              id="service"
+                              name="service"
+                              disabled={status === "loading"}
+                              value={formData.service}
+                              onChange={handleInputChange}
+                              className="w-full bg-black/40 border border-white/10 focus:border-gold rounded-xl pl-3.5 pr-10 py-1.5 sm:pl-4 sm:pr-10 sm:py-3 text-xs sm:text-sm text-white outline-none appearance-none transition-all disabled:opacity-50 cursor-pointer select-none"
+                            >
+                              <option value="Weddings" className="bg-[#151515]">Wedding Transportation</option>
+                              <option value="Corporate" className="bg-[#151515]">Corporate Travel</option>
+                              <option value="Schools" className="bg-[#151515]">School & College Trip</option>
+                              <option value="Outstation" className="bg-[#151515]">Outstation Tours</option>
+                              <option value="Airport" className="bg-[#151515]">Airport Transfer</option>
+                              <option value="Others" className="bg-[#151515]">Family / Other Functions</option>
+                            </select>
+                            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-gold pointer-events-none">
+                              <ChevronDown className="w-4 h-4" />
+                            </div>
                           </div>
+                        </div>
+
+                        {/* Passengers input */}
+                        <div className="flex flex-col gap-0.5 sm:gap-2">
+                          <label htmlFor="passengers" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Number of Passengers</label>
+                          <input
+                            type="number"
+                            id="passengers"
+                            name="passengers"
+                            required
+                            min="1"
+                            disabled={status === "loading"}
+                            value={formData.passengers}
+                            onChange={handleInputChange}
+                            placeholder="e.g. 15"
+                            className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3.5 py-1.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder-white/20 outline-none transition-all disabled:opacity-50"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="grid sm:grid-cols-2 gap-2.5 sm:gap-6">
+                        {/* Pickup Location input */}
+                        <div className="flex flex-col gap-0.5 sm:gap-2">
+                          <label htmlFor="pickup" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Pickup Location</label>
+                          <input
+                            type="text"
+                            id="pickup"
+                            name="pickup"
+                            required
+                            disabled={status === "loading"}
+                            value={formData.pickup}
+                            onChange={handleInputChange}
+                            placeholder="e.g. Dwarka Sector 10"
+                            className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3.5 py-1.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder-white/20 outline-none transition-all disabled:opacity-50"
+                          />
+                        </div>
+
+                        {/* Destination input */}
+                        <div className="flex flex-col gap-0.5 sm:gap-2">
+                          <label htmlFor="destination" className="font-sans text-[10px] sm:text-xs font-semibold text-white/60 tracking-wider uppercase">Destination</label>
+                          <input
+                            type="text"
+                            id="destination"
+                            name="destination"
+                            required
+                            disabled={status === "loading"}
+                            value={formData.destination}
+                            onChange={handleInputChange}
+                            placeholder="e.g. Gurugram CyberCity"
+                            className="bg-black/40 border border-white/10 focus:border-gold rounded-xl px-3.5 py-1.5 sm:px-4 sm:py-3 text-xs sm:text-sm text-white placeholder-white/20 outline-none transition-all disabled:opacity-50"
+                          />
                         </div>
                       </div>
 

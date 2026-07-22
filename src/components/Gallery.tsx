@@ -314,6 +314,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                       src={img.src}
                                       alt={img.title}
                                       fill
+                                      priority={idx === 0}
                                       sizes="(max-width: 768px) 340px, 340px"
                                       className="object-cover"
                                     />
@@ -384,6 +385,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                 src={img.src}
                                 alt={img.title}
                                 fill
+                                priority={displayIdx === 0}
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 25vw"
                                 className="object-cover transition-all duration-700 group-hover:scale-[1.025]"
                               />

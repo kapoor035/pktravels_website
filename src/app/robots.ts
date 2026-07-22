@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://pktraveldelhi.com/sitemap.xml",
+    sitemap: "https://pktravelsdelhi.com/sitemap.xml",
   };
 }

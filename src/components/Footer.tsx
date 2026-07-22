@@ -70,6 +70,7 @@ export default function Footer() {
                   src="/assets/logo/logo.png"
                   alt={`${siteConfig.businessName} Logo`}
                   fill
+                  sizes="40px"
                   className="object-cover scale-110"
                 />
               </div>

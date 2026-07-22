@@ -95,6 +95,8 @@ export default function Navbar() {
                 src="/assets/logo/logo.png"
                 alt={`${siteConfig.businessName} Logo`}
                 fill
+                priority
+                sizes="(max-width: 768px) 40px, 48px"
                 className="object-cover scale-110 group-hover:scale-125 transition-transform duration-500"
               />
             </div>

@@ -81,7 +81,7 @@ export const siteConfig = {
     display: "+91 99110 16644",
     number: "919911016644",
   },
-  email: "pktravelsdwarka@gmail.com",
+  email: "pktravelsdelhi1@gmail.com",
   address: {
     line1: "Plot No. 484",
     line2: "Sector 19, Dwarka",
