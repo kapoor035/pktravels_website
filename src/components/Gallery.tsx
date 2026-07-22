@@ -316,7 +316,8 @@ export default function Gallery({ preview = false }: GalleryProps) {
                       {displayImages.map((img, displayIdx) => (
                         <motion.div
                           key={img.src}
-                          initial={isMobile ? false : { opacity: 0, y: 20 }}
+                          initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                          animate={isMobile ? { opacity: 1, y: 0 } : undefined}
                           whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                           viewport={isMobile ? undefined : { once: true }}
                           transition={{ duration: 0.6 }}
@@ -372,7 +373,8 @@ export default function Gallery({ preview = false }: GalleryProps) {
                     {displayImages.map((img, displayIdx) => (
                       <motion.div
                         key={img.src}
-                        initial={isMobile ? false : { opacity: 0, y: 20 }}
+                        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                        animate={isMobile ? { opacity: 1, y: 0 } : undefined}
                         whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                         viewport={isMobile ? undefined : { once: true }}
                         transition={{ duration: isMobile ? 0.45 : 0.6 }}
@@ -444,7 +446,8 @@ export default function Gallery({ preview = false }: GalleryProps) {
                 {/* Homepage Preview View Button */}
                 {preview && validImages.length > 3 && (
                   <motion.div
-                    initial={isMobile ? false : { opacity: 0, y: 10 }}
+                    initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+                    animate={isMobile ? { opacity: 1, y: 0 } : undefined}
                     whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                     viewport={isMobile ? undefined : { once: true }}
                     className="mt-2 sm:mt-6"

@@ -84,7 +84,8 @@ export default function Fleet() {
           {/* Left Column: Image Container / Placeholder */}
           <div className="lg:col-span-7 flex flex-col justify-center">
             <motion.div
-              initial={isMobile ? false : { opacity: 0, scale: 0.95 }}
+              initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
+              animate={isMobile ? { opacity: 1, scale: 1 } : undefined}
               whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}
               viewport={isMobile ? undefined : { once: true }}
               transition={{ duration: isMobile ? 0.5 : 0.8 }}
@@ -123,7 +124,8 @@ export default function Fleet() {
           {/* Right Column: Fleet Specs & Features */}
           <div className="lg:col-span-5 flex flex-col justify-between p-2">
             <motion.div
-              initial={isMobile ? false : { opacity: 0, x: 20 }}
+              initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
+              animate={isMobile ? { opacity: 1, x: 0 } : undefined}
               whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
               viewport={isMobile ? undefined : { once: true }}
               transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.05 : 0.1 }}
@@ -162,7 +164,8 @@ export default function Fleet() {
 
             {/* Check Availability CTA */}
             <motion.div
-              initial={isMobile ? false : { opacity: 0, y: 15 }}
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+              animate={isMobile ? { opacity: 1, y: 0 } : undefined}
               whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
               viewport={isMobile ? undefined : { once: true }}
               transition={{ duration: isMobile ? 0.45 : 0.6, delay: isMobile ? 0.08 : 0.2 }}

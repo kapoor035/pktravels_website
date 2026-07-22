@@ -74,7 +74,8 @@ export default function WhyChooseUs() {
             return (
               <motion.div
                 key={point.title}
-                initial={isMobile ? false : { opacity: 0, y: 20 }}
+                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+                animate={isMobile ? { opacity: 1, y: 0 } : undefined}
                 whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                 viewport={isMobile ? undefined : { once: true, margin: "-100px" }}
                 transition={{ duration: isMobile ? 0.45 : 0.6, delay: isMobile ? idx * 0.04 : idx * 0.08 }}

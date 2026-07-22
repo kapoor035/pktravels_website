@@ -68,8 +68,8 @@ export default function Hero() {
         controlsList="nodownload nofullscreen noremoteplayback"
         preload="auto"
         onLoadedData={() => setVideoLoaded(true)}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: videoLoaded ? 1 : 0 }}
+        initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
+        animate={isMobile ? { opacity: 1 } : { opacity: videoLoaded ? 1 : 0 }}
         transition={{ duration: 1 }}
         className="absolute top-0 left-0 w-full h-full object-cover z-0 no-controls"
       >
@@ -78,7 +78,7 @@ export default function Hero() {
 
       {/* Loader visual behind video to prevent layouts popping */}
       <AnimatePresence>
-        {!videoLoaded && (
+        {!videoLoaded && !isMobile && (
           <div className="absolute inset-0 bg-[#0A0A0A] flex items-center justify-center z-[1] skeleton-shimmer" />
         )}
       </AnimatePresence>
@@ -90,7 +90,7 @@ export default function Hero() {
       <div className="relative z-20 max-w-5xl mx-auto px-6 text-center flex flex-col items-center justify-center h-full pt-12 sm:pt-16">
         <motion.div
           variants={containerVariants}
-          initial="hidden"
+          initial={isMobile ? "visible" : "hidden"}
           animate="visible"
           viewport={{ once: true }}
           className="flex flex-col items-center"

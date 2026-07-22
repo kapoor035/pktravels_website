@@ -72,7 +72,8 @@ export default function Services() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-20">
           <motion.div
-            initial={isMobile ? false : { opacity: 0, y: 15 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 15 }}
+            animate={isMobile ? { opacity: 1, y: 0 } : undefined}
             whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
             viewport={isMobile ? undefined : { once: true, margin: "-100px" }}
             transition={{ duration: isMobile ? 0.45 : 0.6 }}
@@ -84,7 +85,8 @@ export default function Services() {
           </motion.div>
           
           <motion.h2
-            initial={isMobile ? false : { opacity: 0, y: 20 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={isMobile ? { opacity: 1, y: 0 } : undefined}
             whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
             viewport={isMobile ? undefined : { once: true, margin: "-100px" }}
             transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.05 : 0.1 }}
@@ -94,7 +96,8 @@ export default function Services() {
           </motion.h2>
           
           <motion.p
-            initial={isMobile ? false : { opacity: 0, y: 20 }}
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            animate={isMobile ? { opacity: 1, y: 0 } : undefined}
             whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
             viewport={isMobile ? undefined : { once: true, margin: "-100px" }}
             transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.08 : 0.2 }}
@@ -114,7 +117,8 @@ export default function Services() {
             return (
               <motion.div
                 key={service.title}
-                initial={isMobile ? false : { opacity: 0, y: 30 }}
+                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                animate={isMobile ? { opacity: 1, y: 0 } : undefined}
                 whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                 viewport={isMobile ? undefined : { once: true, margin: "-100px" }}
                 transition={{ duration: isMobile ? 0.45 : 0.6, delay: isMobile ? idx * 0.04 : idx * 0.08 }}

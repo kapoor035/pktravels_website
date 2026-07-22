@@ -54,7 +54,8 @@ export default function About() {
           {/* Section title */}
           <div className="lg:col-span-5">
             <motion.div
-              initial={isMobile ? false : { opacity: 0, x: -20 }}
+              initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+              animate={isMobile ? { opacity: 1, x: 0 } : undefined}
               whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
               viewport={isMobile ? undefined : { once: true, margin: "-100px" }}
               transition={{ duration: isMobile ? 0.45 : 0.6 }}
@@ -64,7 +65,8 @@ export default function About() {
               <span className="text-xs font-bold text-gold tracking-[0.3em] uppercase">Who We Are</span>
             </motion.div>
             <motion.h2
-              initial={isMobile ? false : { opacity: 0, y: 20 }}
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={isMobile ? { opacity: 1, y: 0 } : undefined}
               whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
               viewport={isMobile ? undefined : { once: true, margin: "-100px" }}
               transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.05 : 0.1 }}
@@ -77,7 +79,8 @@ export default function About() {
           {/* Description */}
           <div className="lg:col-span-7 mt-2 lg:mt-6">
             <motion.p
-              initial={isMobile ? false : { opacity: 0, y: 20 }}
+              initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+              animate={isMobile ? { opacity: 1, y: 0 } : undefined}
               whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
               viewport={isMobile ? undefined : { once: true, margin: "-100px" }}
               transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 0.08 : 0.2 }}
@@ -99,7 +102,8 @@ export default function About() {
             return (
               <motion.div
                 key={pillar.title}
-                initial={isMobile ? false : { opacity: 0, y: 30 }}
+                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                animate={isMobile ? { opacity: 1, y: 0 } : undefined}
                 whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                 viewport={isMobile ? undefined : { once: true, margin: "-100px" }}
                 transition={{ duration: isMobile ? 0.45 : 0.6, delay: isMobile ? idx * 0.05 : idx * 0.1 }}
