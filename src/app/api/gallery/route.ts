@@ -11,7 +11,7 @@ export async function GET() {
       return NextResponse.json({ images: [] });
     }
     
-    const categories = ["all", "45-seater", "50-seater", "60-seater", "65-seater"];
+    const categories = ["all/44 seater", "all/50 seater", "all/61 seater", "all/66 seater"];
     const allImages: string[] = [];
     const validExtensions = [".jpg", ".jpeg", ".png", ".webp", ".PNG", ".mp4", ".mov", ".webm"];
     
@@ -19,10 +19,41 @@ export async function GET() {
       const catDir = path.join(baseGalleryDir, cat);
       if (fs.existsSync(catDir)) {
         const files = fs.readdirSync(catDir);
-        const filtered = files
-          .filter((file) => validExtensions.includes(path.extname(file).toLowerCase()) && !file.startsWith("."))
-          .map((file) => `/gallery/${cat}/${file}`);
-        allImages.push(...filtered);
+        
+        // Filter valid media files
+        const mediaFiles = files.filter((file) => 
+          validExtensions.includes(path.extname(file).toLowerCase()) && !file.startsWith(".")
+        );
+        
+        // Separate images and videos
+        const images = mediaFiles.filter((file) => {
+          const ext = path.extname(file).toLowerCase();
+          return ![".mp4", ".mov", ".webm"].includes(ext);
+        });
+        
+        const videos = mediaFiles.filter((file) => {
+          const ext = path.extname(file).toLowerCase();
+          return [".mp4", ".mov", ".webm"].includes(ext);
+        });
+        
+        // Sort images numerically by trailing index
+        images.sort((a, b) => {
+          const numA = parseInt(a.match(/-(\d+)\./)?.[1] || "0", 10);
+          const numB = parseInt(b.match(/-(\d+)\./)?.[1] || "0", 10);
+          return numA - numB;
+        });
+        
+        // Sort videos numerically by trailing index
+        videos.sort((a, b) => {
+          const numA = parseInt(a.match(/-video-(\d+)\./)?.[1] || "0", 10);
+          const numB = parseInt(b.match(/-video-(\d+)\./)?.[1] || "0", 10);
+          return numA - numB;
+        });
+        
+        // Combine sorted media list
+        const sortedCategoryFiles = [...images, ...videos];
+        const mapped = sortedCategoryFiles.map((file) => `/gallery/${cat}/${file}`);
+        allImages.push(...mapped);
       }
     }
     

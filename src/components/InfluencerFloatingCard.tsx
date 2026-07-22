@@ -35,6 +35,7 @@ export default function InfluencerFloatingCard() {
   const modalVideoRef = useRef<HTMLVideoElement>(null);
   const previewVideoRef = useRef<HTMLVideoElement>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
  
   useEffect(() => {
     const checkMobile = () => {
@@ -42,7 +43,17 @@ export default function InfluencerFloatingCard() {
     };
     checkMobile();
     window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
+    
+    const handleToggle = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      setIsMenuOpen(customEvent.detail.open);
+    };
+    window.addEventListener("mobileMenuToggle", handleToggle);
+
+    return () => {
+      window.removeEventListener("resize", checkMobile);
+      window.removeEventListener("mobileMenuToggle", handleToggle);
+    };
   }, []);
  
   const openModal = () => {
@@ -96,7 +107,7 @@ export default function InfluencerFloatingCard() {
     <>
       {/* Floating Card */}
       <AnimatePresence>
-        {isVisible && (
+        {isVisible && !isMenuOpen && (
           <motion.div
             initial={isMobile ? { opacity: 0, y: 10 } : { opacity: 0, scale: 0.8, y: 50 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}

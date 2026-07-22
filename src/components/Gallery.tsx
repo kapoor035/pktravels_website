@@ -17,6 +17,8 @@ const MemoizedGalleryVideo = memo(({ src }: MemoizedGalleryVideoProps) => {
       className="w-full h-full object-cover no-controls pointer-events-none"
       autoPlay
       muted
+      // @ts-ignore
+      defaultmuted="true"
       loop
       playsInline
       controls={false}
@@ -32,7 +34,7 @@ MemoizedGalleryVideo.displayName = "MemoizedGalleryVideo";
 interface GalleryItem {
   src: string;
   title: string;
-  category: "All" | "45 Seater" | "50 Seater" | "60 Seater" | "65 Seater";
+  category: "All" | "44 Seater" | "50 Seater" | "61 Seater" | "66 Seater";
   type: "image" | "video";
 }
 
@@ -44,7 +46,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
   const [validImages, setValidImages] = useState<GalleryItem[]>([]);
   const [activeIdx, setActiveIdx] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"All" | "45 Seater" | "50 Seater" | "60 Seater" | "65 Seater">("All");
+  const [activeTab, setActiveTab] = useState<"All" | "44 Seater" | "50 Seater" | "61 Seater" | "66 Seater">("All");
   const [loadedMedia, setLoadedMedia] = useState<Record<string, boolean>>({});
   const [isMobile, setIsMobile] = useState(false);
 
@@ -72,21 +74,21 @@ export default function Gallery({ preview = false }: GalleryProps) {
             const fileName = pathStr.split("/").pop() || "";
             const ext = pathStr.split(".").pop()?.toLowerCase() || "";
 
-            let category: "All" | "45 Seater" | "50 Seater" | "60 Seater" | "65 Seater" = "All";
+            let category: "All" | "44 Seater" | "50 Seater" | "61 Seater" | "66 Seater" = "All";
             let type: "image" | "video" = "image";
 
             if (["mp4", "mov", "webm"].includes(ext)) {
               type = "video";
             }
 
-            if (pathStr.includes("/gallery/45-seater/")) {
-              category = "45 Seater";
-            } else if (pathStr.includes("/gallery/50-seater/")) {
+            if (pathStr.includes("/gallery/44-seater/") || pathStr.includes("/all/44 seater/")) {
+              category = "44 Seater";
+            } else if (pathStr.includes("/gallery/50-seater/") || pathStr.includes("/all/50 seater/")) {
               category = "50 Seater";
-            } else if (pathStr.includes("/gallery/60-seater/")) {
-              category = "60 Seater";
-            } else if (pathStr.includes("/gallery/65-seater/")) {
-              category = "65 Seater";
+            } else if (pathStr.includes("/gallery/61-seater/") || pathStr.includes("/all/61 seater/")) {
+              category = "61 Seater";
+            } else if (pathStr.includes("/gallery/66-seater/") || pathStr.includes("/all/66 seater/")) {
+              category = "66 Seater";
             } else {
               category = "All";
             }
@@ -122,7 +124,28 @@ export default function Gallery({ preview = false }: GalleryProps) {
     : validImages.filter((img) => activeTab === "All" || img.category === activeTab);
 
   // Sliced items for homepage preview
-  const displayImages = preview ? filteredImages.slice(0, 3) : filteredImages;
+  const homepagePreview: GalleryItem[] = [
+    {
+      src: "/gallery/all/exterior-01.jpg",
+      title: "Exterior 01",
+      category: "All",
+      type: "image",
+    },
+    {
+      src: "/gallery/all/exterior-02.jpg",
+      title: "Exterior 02",
+      category: "All",
+      type: "image",
+    },
+    {
+      src: "/gallery/all/exterior-03.jpg",
+      title: "Exterior 03",
+      category: "All",
+      type: "image",
+    },
+  ];
+
+  const displayImages = preview ? homepagePreview : filteredImages;
 
   const [activeHighlightIdx, setActiveHighlightIdx] = useState(0);
 
@@ -219,7 +242,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
 
         {!preview && !isLoading && (
           <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12">
-            {(["All", "45 Seater", "50 Seater", "60 Seater", "65 Seater"] as const).map((tab) => (
+            {(["All", "44 Seater", "50 Seater", "61 Seater", "66 Seater"] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => {
@@ -227,8 +250,8 @@ export default function Gallery({ preview = false }: GalleryProps) {
                   setActiveIdx(null);
                 }}
                 className={`font-sans text-[10px] sm:text-xs font-bold tracking-widest uppercase px-4 py-2 sm:px-6 sm:py-3 rounded-full border transition-all duration-300 cursor-pointer select-none ${activeTab === tab
-                    ? "bg-gold text-black border-gold shadow-[0_0_15px_rgba(200,168,78,0.25)]"
-                    : "bg-[#151515] text-secondary border-white/5 hover:text-white hover:border-gold/30"
+                  ? "bg-gold text-black border-gold shadow-[0_0_15px_rgba(200,168,78,0.25)]"
+                  : "bg-[#151515] text-secondary border-white/5 hover:text-white hover:border-gold/30"
                   }`}
               >
                 {tab}
@@ -345,6 +368,8 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                   src={img.src}
                                   className="w-full h-full object-cover transition-all duration-700 no-controls"
                                   muted
+                                  // @ts-ignore
+                                  defaultmuted="true"
                                   playsInline
                                   controls={false}
                                   disablePictureInPicture={true}
@@ -407,6 +432,8 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                 className={`w-full h-full object-cover transition-all duration-700 no-controls ${loadedMedia[img.src] ? "opacity-75 scale-100 group-hover:scale-102" : "opacity-0 scale-95"
                                   }`}
                                 muted
+                                // @ts-ignore
+                                defaultmuted="true"
                                 playsInline
                                 controls={false}
                                 disablePictureInPicture={true}
@@ -436,14 +463,6 @@ export default function Gallery({ preview = false }: GalleryProps) {
                             <div className="w-10 h-10 rounded-full bg-gold/90 text-black flex items-center justify-center shadow-md">
                               {img.type === "video" ? <Play className="w-4 h-4 fill-current ml-0.5" /> : <Eye className="w-5 h-5" />}
                             </div>
-                          </div>
-                          <div>
-                            <span className="text-[10px] text-gold tracking-widest font-bold uppercase mb-2 block">
-                              {img.category}
-                            </span>
-                            <h3 className="font-display text-lg font-bold text-white tracking-wide">
-                              {img.title}
-                            </h3>
                           </div>
                         </div>
                       </motion.div>
@@ -490,11 +509,10 @@ export default function Gallery({ preview = false }: GalleryProps) {
                   {!preview ? (
                     <div className="bg-black/50 border border-white/5 py-4 px-5 rounded-xl font-mono text-[10px] sm:text-xs text-gold/90 text-left select-all">
                       📁 public/gallery/<br />
-                      &nbsp;&nbsp;├── all/ (for the All category)<br />
-                      &nbsp;&nbsp;├── 45-seater/ (for 45 Seater)<br />
+                      &nbsp;&nbsp;├── 44-seater/ (for 44 Seater)<br />
                       &nbsp;&nbsp;├── 50-seater/ (for 50 Seater)<br />
-                      &nbsp;&nbsp;├── 60-seater/ (for 60 Seater)<br />
-                      &nbsp;&nbsp;└── 65-seater/ (for 65 Seater)
+                      &nbsp;&nbsp;├── 61-seater/ (for 61 Seater)<br />
+                      &nbsp;&nbsp;└── 66-seater/ (for 66 Seater)
                     </div>
                   ) : (
                     <p className="text-xs text-gold font-medium">Ready for fleet capacity visuals</p>
@@ -553,11 +571,19 @@ export default function Gallery({ preview = false }: GalleryProps) {
               {displayImages[activeIdx].type === "video" ? (
                 <video
                   src={displayImages[activeIdx].src}
-                  controls
-                  controlsList="nodownload"
-                  onContextMenu={(e) => e.preventDefault()}
+                  autoPlay
+                  muted
+                  // @ts-ignore
+                  defaultmuted="true"
+                  loop
                   playsInline
-                  className="max-w-full max-h-[70vh] rounded-2xl border border-white/10 shadow-2xl"
+                  // @ts-ignore
+                  webkit-playsinline="true"
+                  controls={false}
+                  disablePictureInPicture={true}
+                  controlsList="nodownload nofullscreen noremoteplayback"
+                  onContextMenu={(e) => e.preventDefault()}
+                  className="max-w-full max-h-[70vh] rounded-2xl border border-white/10 shadow-2xl pointer-events-none"
                 />
               ) : (
                 <Image
@@ -570,14 +596,7 @@ export default function Gallery({ preview = false }: GalleryProps) {
                 />
               )}
 
-              <div className="text-center mt-6">
-                <span className="text-[10px] text-gold tracking-widest font-bold uppercase mb-1 block">
-                  {displayImages[activeIdx].category}
-                </span>
-                <p className="font-display text-xl font-bold text-white tracking-wide">
-                  {displayImages[activeIdx].title}
-                </p>
-              </div>
+
             </motion.div>
 
             {/* Right Control */}

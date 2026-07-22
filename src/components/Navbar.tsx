@@ -64,6 +64,11 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    const event = new CustomEvent("mobileMenuToggle", { detail: { open: isMobileMenuOpen } });
+    window.dispatchEvent(event);
+  }, [isMobileMenuOpen]);
+
   const primaryPhone = siteConfig.phones[0];
 
   return (
@@ -73,19 +78,19 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
         className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
-          isScrolled
-            ? "bg-[#0A0A0A]/85 backdrop-blur-md border-b border-white/5 py-4 shadow-lg"
-            : "bg-transparent py-6"
+          isScrolled || isMobileMenuOpen
+            ? "bg-[#0A0A0A]/85 backdrop-blur-md border-b border-white/5 py-3 md:py-4 shadow-lg"
+            : "bg-transparent py-4 md:py-6"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
           {/* Logo */}
           <Link 
             href="/#home" 
-            className="flex items-center gap-3 group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold focus-visible:ring-offset-2 rounded-xl"
+            className="flex items-center gap-2 md:gap-3 group focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gold focus-visible:ring-offset-2 rounded-xl"
             aria-label="PK Travels Home"
           >
-            <div className="relative w-12 h-12 overflow-hidden rounded-full border border-white/10 group-hover:border-gold transition-colors duration-300">
+            <div className="relative w-10 h-10 md:w-12 md:h-12 overflow-hidden rounded-full border border-white/10 group-hover:border-gold transition-colors duration-300">
               <Image
                 src="/assets/logo/logo.png"
                 alt={`${siteConfig.businessName} Logo`}
@@ -94,10 +99,10 @@ export default function Navbar() {
               />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-bold text-lg tracking-wider text-white group-hover:text-gold transition-colors duration-300">
+              <span className="font-display font-bold text-base md:text-lg tracking-wider text-white group-hover:text-gold transition-colors duration-300">
                 {siteConfig.businessName.toUpperCase()}
               </span>
-              <span className="text-[10px] text-gold tracking-[0.2em] font-sans">
+              <span className="text-[8.5px] md:text-[10px] text-gold tracking-[0.18em] md:tracking-[0.2em] font-sans">
                 {siteConfig.tagline.toUpperCase()}
               </span>
             </div>
@@ -143,7 +148,7 @@ export default function Navbar() {
             className="lg:hidden text-white hover:text-gold transition-colors duration-300 p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold rounded-lg"
             aria-label={isMobileMenuOpen ? "Close main navigation menu" : "Open main navigation menu"}
           >
-            {isMobileMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
       </motion.nav>
@@ -156,9 +161,9 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
-            className="fixed inset-0 top-[80px] z-40 bg-[#0A0A0A]/98 backdrop-blur-xl border-t border-white/5 flex flex-col justify-between p-8 lg:hidden"
+            className="fixed inset-0 top-[64px] z-40 bg-[#0A0A0A]/98 backdrop-blur-xl border-t border-white/5 flex flex-col justify-between p-6 lg:hidden"
           >
-            <div className="flex flex-col gap-6 mt-8">
+            <div className="flex flex-col gap-4 mt-6">
               {navLinks.map((link, idx) => (
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
@@ -169,7 +174,7 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`font-display text-2xl font-medium block w-full py-2 hover:text-gold transition-colors ${
+                    className={`font-display text-xl font-medium block w-full py-1 hover:text-gold transition-colors ${
                       isLinkActive(link.href) ? "text-gold" : "text-white"
                     }`}
                   >
@@ -183,12 +188,12 @@ export default function Navbar() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="flex flex-col gap-4 mb-16"
+              className="flex flex-col gap-3 mb-6"
             >
               <a
                 href={`tel:${primaryPhone.raw}`}
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="flex items-center justify-center gap-2 font-sans font-bold text-black bg-gold hover:bg-gold-hover px-8 py-4 rounded-full transition-all duration-300"
+                className="flex items-center justify-center gap-2 font-sans font-bold text-black bg-gold hover:bg-gold-hover px-6 py-3 rounded-full transition-all duration-300"
                 aria-label={`Call Support Chauffeur at ${primaryPhone.display}`}
               >
                 <Phone className="w-5 h-5" />
