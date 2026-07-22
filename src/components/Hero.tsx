@@ -64,6 +64,7 @@ export default function Hero() {
       >
         <video
           ref={videoRef}
+          src="/assets/hero/drone.mp4"
           autoPlay
           muted
           loop
@@ -75,9 +76,7 @@ export default function Hero() {
           onLoadedData={() => setVideoLoaded(true)}
           className="w-full h-full object-cover no-controls pointer-events-none"
           suppressHydrationWarning
-        >
-          <source src="/assets/hero/drone.mp4" type="video/mp4" />
-        </video>
+        />
       </motion.div>
 
       {/* Loader visual behind video to prevent layouts popping */}

@@ -1,0 +1,13 @@
+- readyState: 4
+[Fleet Video Diagnostics] Initial Mount State:
+- paused: true
+- currentTime: 0
+- muted: true
+[Fleet Video Diagnostics] play() returned Promise
+[Fleet Video Event: play] - paused: false, readyState: 4, currentTime: 0.005063
+[Fleet Video Event: playing] - paused: false, readyState: 4, currentTime: 0.005471
+[Fleet Video Diagnostics] play() promise RESOLVED successfully.
+[Fleet Video Event: waiting] - paused: false, readyState: 1, currentTime: 0
+[Fleet Video Event: pause] - paused: true, readyState: 1, currentTime: 0
+[Fleet Video Event: suspend] - paused: true, readyState: 0, currentTime: 0
+[Fleet Video Event: suspend] - paused: true, readyState: 1, currentTime: 0

@@ -85,6 +85,7 @@ export default function InfluencerFloatingCard() {
               {/* Loop Preview Video */}
               <video
                 ref={previewVideoRef}
+                src="/assets/videos/influencer.mp4"
                 autoPlay
                 muted
                 loop
@@ -95,9 +96,7 @@ export default function InfluencerFloatingCard() {
                 preload="auto"
                 className="w-full h-full object-cover scale-105 group-hover:scale-110 transition-transform duration-700 no-controls pointer-events-none"
                 suppressHydrationWarning
-              >
-                <source src="/assets/videos/influencer.mp4" type="video/mp4" />
-              </video>
+              />
  
               {/* Dark Overlay */}
               <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-300" />

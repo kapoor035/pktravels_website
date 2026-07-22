@@ -49,11 +49,46 @@ export default function Fleet() {
   }, []);
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.play().catch((err) => {
-        console.log("Fleet video autoplay failed:", err);
+    const video = videoRef.current;
+    if (video) {
+      const postLog = (msg: string) => {
+        console.log(msg);
+        fetch("/api/diagnostics", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ log: msg }),
+        }).catch(() => {});
+      };
+
+      postLog("[Fleet Video Diagnostics] Initial Mount State:");
+      postLog("- paused: " + video.paused);
+      postLog("- readyState: " + video.readyState);
+      postLog("- currentTime: " + video.currentTime);
+      postLog("- muted: " + video.muted);
+
+      // Track events
+      const logState = (eventName: string) => {
+        postLog(`[Fleet Video Event: ${eventName}] - paused: ${video.paused}, readyState: ${video.readyState}, currentTime: ${video.currentTime}`);
+      };
+
+      const events = ["play", "playing", "pause", "waiting", "error", "suspend", "stalled"];
+      events.forEach((evt) => {
+        video.addEventListener(evt, () => logState(evt));
       });
+
+      // Call play and capture promise
+      const playPromise = video.play();
+      postLog("[Fleet Video Diagnostics] play() returned Promise");
+
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            postLog("[Fleet Video Diagnostics] play() promise RESOLVED successfully.");
+          })
+          .catch((err: any) => {
+            postLog(`[Fleet Video Diagnostics] play() promise REJECTED: ${err.name} - ${err.message}`);
+          });
+      }
     }
   }, []);
 
@@ -103,6 +138,7 @@ export default function Fleet() {
               {/* Featured Drone Video */}
               <video
                 ref={videoRef}
+                src="/gallery/all/video-01.mp4"
                 autoPlay
                 muted
                 loop
@@ -113,9 +149,7 @@ export default function Fleet() {
                 preload="auto"
                 className="w-full h-full object-cover scale-100 group-hover:scale-[1.02] transition-transform duration-700 no-controls pointer-events-none"
                 suppressHydrationWarning
-              >
-                <source src="/gallery/all/video-01.mp4" type="video/mp4" />
-              </video>
+              />
               
               {/* Subtle Black Overlay (25–30% opacity) */}
               <div className="absolute inset-0 bg-black/28 pointer-events-none group-hover:bg-black/18 transition-colors duration-500" />
