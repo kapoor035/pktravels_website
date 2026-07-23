@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 
 interface CustomerConfirmationEmailProps {
@@ -23,7 +24,7 @@ export function CustomerConfirmationEmail({
   passengers,
   message,
 }: CustomerConfirmationEmailProps) {
-  const containerStyle: any = {
+  const containerStyle: React.CSSProperties & { WebkitTextSizeAdjust?: string; msTextSizeAdjust?: string } = {
     fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
     backgroundColor: "#0A0A0A",
     color: "#FFFFFF",

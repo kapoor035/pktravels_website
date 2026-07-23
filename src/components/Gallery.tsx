@@ -17,8 +17,6 @@ const MemoizedGalleryVideo = memo(({ src }: MemoizedGalleryVideoProps) => {
       className="w-full h-full object-cover no-controls pointer-events-none"
       autoPlay
       muted
-      // @ts-ignore
-      defaultmuted="true"
       loop
       playsInline
       controls={false}
@@ -369,8 +367,6 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                   src={img.src}
                                   className="w-full h-full object-cover transition-all duration-700 no-controls"
                                   muted
-                                  // @ts-ignore
-                                  defaultmuted="true"
                                   playsInline
                                   controls={false}
                                   disablePictureInPicture={true}
@@ -434,8 +430,6 @@ export default function Gallery({ preview = false }: GalleryProps) {
                                 className={`w-full h-full object-cover transition-all duration-700 no-controls ${loadedMedia[img.src] ? "opacity-75 scale-100 group-hover:scale-102" : "opacity-0 scale-95"
                                   }`}
                                 muted
-                                // @ts-ignore
-                                defaultmuted="true"
                                 playsInline
                                 controls={false}
                                 disablePictureInPicture={true}
@@ -575,12 +569,8 @@ export default function Gallery({ preview = false }: GalleryProps) {
                   src={displayImages[activeIdx].src}
                   autoPlay
                   muted
-                  // @ts-ignore
-                  defaultmuted="true"
                   loop
                   playsInline
-                  // @ts-ignore
-                  webkit-playsinline="true"
                   controls={false}
                   disablePictureInPicture={true}
                   controlsList="nodownload nofullscreen noremoteplayback"
