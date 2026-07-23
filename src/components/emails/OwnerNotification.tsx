@@ -26,10 +26,10 @@ export function OwnerNotificationEmail({
   timestamp,
 }: OwnerNotificationEmailProps) {
   const containerStyle: any = {
-    fontFamily: "'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif",
-    backgroundColor: "#0B0B0B",
+    fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+    backgroundColor: "#0A0A0A",
     color: "#FFFFFF",
-    padding: "40px 20px",
+    padding: "24px 16px",
     margin: 0,
     width: "100%",
     WebkitTextSizeAdjust: "100%",
@@ -45,26 +45,23 @@ export function OwnerNotificationEmail({
 
   const logoStyle: React.CSSProperties = {
     display: "block",
-    margin: "0 auto 24px auto",
-    width: "72px",
-    height: "72px",
-    borderRadius: "50%",
-    border: "1px solid rgba(255,255,255,0.1)",
+    width: "90px",
+    height: "auto",
+    margin: "0 auto 16px auto",
   };
 
   const cardStyle: React.CSSProperties = {
     backgroundColor: "#121212",
     borderRadius: "16px",
-    border: "1px solid rgba(255,255,255,0.06)",
-    padding: "32px 24px",
+    border: "1px solid rgba(212, 175, 55, 0.25)",
+    padding: "24px 20px",
     textAlign: "left",
-    boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
   };
 
   const badgeStyle: React.CSSProperties = {
-    backgroundColor: "rgba(249,115,22,0.1)",
-    border: "1px solid rgba(249,115,22,0.25)",
-    color: "#F97316",
+    backgroundColor: "rgba(212, 175, 55, 0.1)",
+    border: "1px solid rgba(212, 175, 55, 0.3)",
+    color: "#D4AF37",
     fontSize: "11px",
     fontWeight: 700,
     padding: "4px 12px",
@@ -72,11 +69,11 @@ export function OwnerNotificationEmail({
     display: "inline-block",
     textTransform: "uppercase",
     letterSpacing: "0.05em",
-    marginBottom: "16px",
+    marginBottom: "12px",
   };
 
   const headlineStyle: React.CSSProperties = {
-    fontSize: "22px",
+    fontSize: "20px",
     fontWeight: 700,
     color: "#FFFFFF",
     margin: "0 0 8px 0",
@@ -86,63 +83,63 @@ export function OwnerNotificationEmail({
   const timeTextStyle: React.CSSProperties = {
     fontSize: "12px",
     color: "#737373",
-    margin: "0 0 24px 0",
+    margin: "0 0 20px 0",
   };
 
   const dividerStyle: React.CSSProperties = {
     border: 0,
-    borderTop: "1px solid rgba(255,255,255,0.08)",
-    margin: "24px 0",
+    borderTop: "1px solid rgba(255, 255, 255, 0.08)",
+    margin: "20px 0",
   };
 
   const sectionHeadingStyle: React.CSSProperties = {
-    fontSize: "14px",
+    fontSize: "12px",
     fontWeight: 700,
-    color: "#F97316",
+    color: "#D4AF37",
     textTransform: "uppercase",
     letterSpacing: "0.05em",
-    margin: "0 0 16px 0",
+    margin: "0 0 12px 0",
   };
 
   const tableStyle: React.CSSProperties = {
     width: "100%",
     borderCollapse: "collapse",
-    marginBottom: "24px",
+    marginBottom: "20px",
   };
 
   const labelTdStyle: React.CSSProperties = {
-    padding: "10px 0",
-    fontSize: "13px",
+    padding: "8px 0",
+    fontSize: "12px",
     color: "#737373",
     fontWeight: 600,
-    width: "150px",
+    width: "140px",
     verticalAlign: "top",
-    borderBottom: "1px solid rgba(255,255,255,0.04)",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
   };
 
   const valueTdStyle: React.CSSProperties = {
-    padding: "10px 0",
-    fontSize: "13px",
+    padding: "8px 0",
+    fontSize: "12px",
     color: "#E5E5E5",
     verticalAlign: "top",
-    borderBottom: "1px solid rgba(255,255,255,0.04)",
+    borderBottom: "1px solid rgba(255, 255, 255, 0.05)",
   };
 
   const highlightedValueTdStyle: React.CSSProperties = {
     ...valueTdStyle,
-    color: "#F97316",
+    color: "#D4AF37",
     fontWeight: 600,
   };
 
   const messageBoxStyle: React.CSSProperties = {
-    backgroundColor: "rgba(255,255,255,0.02)",
-    border: "1px solid rgba(255,255,255,0.04)",
+    backgroundColor: "rgba(255, 255, 255, 0.02)",
+    border: "1px solid rgba(255, 255, 255, 0.05)",
     borderRadius: "8px",
-    padding: "12px 16px",
-    fontSize: "13px",
+    padding: "12px 14px",
+    fontSize: "12px",
     lineHeight: "1.5",
     color: "#D4D4D4",
-    margin: "0 0 24px 0",
+    margin: "0 0 20px 0",
     whiteSpace: "pre-line",
   };
 
@@ -153,38 +150,46 @@ export function OwnerNotificationEmail({
   };
 
   const primaryButtonStyle: React.CSSProperties = {
-    backgroundColor: "#F97316",
+    backgroundColor: "#D4AF37",
     color: "#000000",
     textDecoration: "none",
-    fontSize: "14px",
+    fontSize: "13px",
     fontWeight: 700,
-    padding: "14px 20px",
-    borderRadius: "12px",
+    padding: "10px 16px",
+    borderRadius: "8px",
     display: "block",
     textAlign: "center",
-    boxShadow: "0 4px 12px rgba(249,115,22,0.2)",
-    letterSpacing: "0.02em",
+    letterSpacing: "0.01em",
   };
 
   const secondaryButtonStyle: React.CSSProperties = {
-    backgroundColor: "transparent",
-    border: "1px solid rgba(255,255,255,0.15)",
-    color: "#FFFFFF",
+    backgroundColor: "#121212",
+    border: "1px solid rgba(212, 175, 55, 0.35)",
+    color: "#D4AF37",
     textDecoration: "none",
-    fontSize: "14px",
+    fontSize: "13px",
     fontWeight: 700,
-    padding: "13px 20px",
-    borderRadius: "12px",
+    padding: "9px 16px",
+    borderRadius: "8px",
     display: "block",
     textAlign: "center",
-    letterSpacing: "0.02em",
+    letterSpacing: "0.01em",
   };
 
   const footerStyle: React.CSSProperties = {
-    padding: "32px 24px 0 24px",
+    padding: "24px 20px 0 20px",
     textAlign: "center",
     color: "#737373",
     fontSize: "11px",
+    lineHeight: "1.6",
+  };
+
+  const footerHeadingStyle: React.CSSProperties = {
+    fontSize: "12px",
+    fontWeight: 700,
+    color: "#A3A3A3",
+    margin: "0 0 4px 0",
+    letterSpacing: "0.02em",
   };
 
   return (
@@ -219,13 +224,13 @@ export function OwnerNotificationEmail({
                   <tr>
                     <td style={labelTdStyle}>Email Address</td>
                     <td style={valueTdStyle}>
-                      <a href={`mailto:${email}`} style={{ color: "#E5E5E5", textDecoration: "none" }}>{email}</a>
+                      <a href={`mailto:${email}`} style={{ color: "#D4AF37", textDecoration: "none" }}>{email}</a>
                     </td>
                   </tr>
                   <tr>
                     <td style={labelTdStyle}>Contact Number</td>
                     <td style={highlightedValueTdStyle}>
-                      <a href={`tel:${phone}`} style={{ color: "#F97316", textDecoration: "none" }}>{phone}</a>
+                      <a href={`tel:${phone}`} style={{ color: "#D4AF37", textDecoration: "none" }}>{phone}</a>
                     </td>
                   </tr>
                   <tr>
@@ -251,7 +256,7 @@ export function OwnerNotificationEmail({
                 </tbody>
               </table>
 
-              <h3 style={{ ...sectionHeadingStyle, fontSize: "12px", marginBottom: "8px" }}>Requirements Description</h3>
+              <h3 style={{ ...sectionHeadingStyle, fontSize: "11px", marginBottom: "6px" }}>Requirements Description</h3>
               <div style={messageBoxStyle}>{message}</div>
 
               <hr style={dividerStyle} />
@@ -260,14 +265,30 @@ export function OwnerNotificationEmail({
                 <tbody>
                   <tr>
                     <td style={{ width: "48%", paddingRight: "4%" }}>
-                      <a href={`tel:${phone}`} style={primaryButtonStyle}>
-                        📞 Call Customer
-                      </a>
+                      <table border={0} cellSpacing={0} cellPadding={0} style={{ width: "100%" }}>
+                        <tbody>
+                          <tr>
+                            <td align="center" style={{ borderRadius: "8px", backgroundColor: "#D4AF37" }}>
+                              <a href={`tel:${phone}`} style={primaryButtonStyle}>
+                                📞 Call Customer
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </td>
                     <td style={{ width: "48%" }}>
-                      <a href={`mailto:${email}`} style={secondaryButtonStyle}>
-                        ✉️ Reply via Email
-                      </a>
+                      <table border={0} cellSpacing={0} cellPadding={0} style={{ width: "100%" }}>
+                        <tbody>
+                          <tr>
+                            <td align="center" style={{ borderRadius: "8px", backgroundColor: "#121212" }}>
+                              <a href={`mailto:${email}`} style={secondaryButtonStyle}>
+                                ✉️ Reply via Email
+                              </a>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </td>
                   </tr>
                 </tbody>
@@ -276,7 +297,19 @@ export function OwnerNotificationEmail({
           </tr>
           <tr>
             <td style={footerStyle}>
-              <p style={{ margin: 0 }}>PK Travel Delhi Admin Notification System</p>
+              <h4 style={footerHeadingStyle}>PK Travel Delhi</h4>
+              <p style={{ margin: "0 0 12px 0" }}>Luxury Bus Rental in Delhi NCR</p>
+              <p style={{ margin: "0 0 12px 0" }}>
+                Plot No. 484, Sector 19, Dwarka, New Delhi – 110075
+              </p>
+              <p style={{ margin: "0 0 12px 0" }}>
+                Bookings:<br />
+                <a href="tel:+919911016644" style={{ color: "#D4AF37", textDecoration: "none" }}>+91 99110 16644</a> | <a href="tel:+919999698020" style={{ color: "#D4AF37", textDecoration: "none" }}>+91 99996 98020</a>
+              </p>
+              <p style={{ margin: 0, borderTop: "1px solid rgba(255, 255, 255, 0.05)", paddingTop: "12px" }}>
+                Website: <a href="https://pktravelsdelhi.com" style={{ color: "#D4AF37", textDecoration: "none" }}>https://pktravelsdelhi.com</a><br />
+                © 2026 PK Travel Delhi. All rights reserved.
+              </p>
             </td>
           </tr>
         </tbody>
